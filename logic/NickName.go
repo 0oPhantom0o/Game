@@ -1,18 +1,18 @@
 package logic
 
 import (
-	"game/domain"
 	"game/repository"
 )
 
-func NickName(user *domain.User) error {
-	id := user.ID
-	nickname := user.NickName
-	phone, err := repository.FindUser(id)
+func NickName(NickName, id string) error {
+	primiviteId, err := ConvertStringToPrimivite(id)
 	if err != nil {
 		return err
 	}
-	nickname, err = repository.UpdateUser(id, phone.Phone, nickname)
+	if err != nil {
+		return err
+	}
+	err = repository.UpdateUser(primiviteId, NickName)
 	if err != nil {
 		return err
 	}

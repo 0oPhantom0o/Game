@@ -8,10 +8,6 @@ import (
 
 func Calculate(c *gin.Context) {
 	tokenString := c.GetHeader("Authorization")
-	if tokenString == "" {
-		c.JSON(http.StatusUnauthorized, "error")
-		return
-	}
 	Id, err := logic.VerifyToken(tokenString)
 	if err != nil {
 		c.JSON(http.StatusUnauthorized, "error")

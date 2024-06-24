@@ -13,19 +13,18 @@ func GetOtp(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, "error")
 		return
 	}
-	err := logic.CompareOtp(&user)
+	err := logic.CompareOtp(user.Phone, user.RandomCode)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, "error")
+		return
+	}
+	id, err := logic.GenerateUser(&user)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, "error")
 
 		return
 	}
-	Id, err := logic.GenerateUser(&user)
-	if err != nil {
-		c.JSON(http.StatusBadRequest, "error")
-
-		return
-	}
-	token, err := logic.GenerateToken(Id)
+	token, err := logic.GenerateToken(id)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, "error")
 

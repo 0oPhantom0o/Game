@@ -2,17 +2,17 @@ package logic
 
 import "game/repository"
 
-func AddPoint(id string) error {
+func ChangePoint(id string, point int) error {
 	mongoId, err := ConvertStringToPrimivite(id)
 	if err != nil {
 		return err
 	}
-	use, err := repository.FindUser(mongoId)
+	userData, err := repository.FindUser(mongoId)
 	if err != nil {
 		return err
 	}
-
-	err = repository.IncreasePoint(use)
+	userData.Point = point
+	err = repository.ChangePoint(userData, mongoId)
 	if err != nil {
 		return err
 	}

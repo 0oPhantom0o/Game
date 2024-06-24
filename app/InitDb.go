@@ -1,18 +1,17 @@
 package app
 
 import (
-	"game/constants"
 	"log"
 )
 
 func InitDb() error {
 	err := MongoConnection()
 	if err != nil {
-		log.Fatalf(constants.DatabaseInitError, err)
+		log.Fatalf("Failed to initialize MongoDB: %v", err)
 	}
 	err = RedisConnection()
 	if err != nil {
-		log.Fatalf(constants.DatabaseInitError, err)
+		log.Fatalf("Failed to initialize MongoDB: %v", err)
 	}
 
 	return nil

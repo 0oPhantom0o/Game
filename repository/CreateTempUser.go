@@ -2,16 +2,18 @@ package repository
 
 import (
 	"context"
+	"fmt"
 	"game/app"
+	"game/constants"
 	"time"
 )
 
 func TempUser(phone, code string) error {
 	rdb := app.RedisDB
 	ctx := context.Background()
-	_, err := rdb.Set(ctx, phone, code, 10*time.Minute).Result()
+	_, err := rdb.Set(ctx, phone, code, constants.RedisExpireTime).Result()
 	if err != nil {
-		return err
+		return fmt.Errorf("couldnt insert data in redis database")
 	}
 	return nil
 }

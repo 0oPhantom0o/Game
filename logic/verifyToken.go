@@ -8,6 +8,9 @@ import (
 )
 
 func VerifyToken(reqToken string) (string, error) {
+	if reqToken == "" {
+		return "", fmt.Errorf("token empty")
+	}
 	splitToken := strings.Split(reqToken, "Bearer")
 	if len(splitToken) != 2 {
 		return "", fmt.Errorf("error")
@@ -26,7 +29,6 @@ func VerifyToken(reqToken string) (string, error) {
 	if !token.Valid {
 		return "", fmt.Errorf("invalid token")
 	}
-	fmt.Printf("Parsed User Claim: %s ", userClaim.ID)
 	Id := userClaim.ID
 	return Id, nil
 }

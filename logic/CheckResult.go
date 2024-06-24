@@ -5,14 +5,24 @@ import (
 	"game/repository"
 )
 
-func CheckAnswer(id, answer string) error {
-	result, err := repository.FindUserResult(id)
+func CheckAnswer(id, answer string) (bool, error) {
+	result, err := repository.FindUserTempData(id)
 	if err != nil {
-		return err
+		return false, err
 	}
 	if result == answer {
-
-		return nil
+		err = ChangePoint(id, 1)
+		if err != nil {
+			return false, err
+		}
+		return true, nil
 	}
-	return fmt.Errorf("answer is wronge")
+	if result != answer {
+		err = ChangePoint(id, -1)
+		if err != nil {
+			return false, err
+		}
+		return false, nil
+	}
+	return false, fmt.Errorf("answer is wronge")
 }

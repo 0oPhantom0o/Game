@@ -10,4 +10,3 @@ const (
 	Database       = "Game"
 	UserCollection = "User"
 )
-const DatabaseInitError = "Failed to initialize MongoDB: %v"

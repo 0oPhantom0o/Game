@@ -9,10 +9,6 @@ import (
 
 func Result(c *gin.Context) {
 	tokenString := c.GetHeader("Authorization")
-	if tokenString == "" {
-		c.JSON(http.StatusUnauthorized, "error")
-		return
-	}
 	id, err := logic.VerifyToken(tokenString)
 	if err != nil {
 		c.JSON(http.StatusUnauthorized, "error")
@@ -24,15 +20,11 @@ func Result(c *gin.Context) {
 		return
 	}
 
-	err = logic.CheckAnswer(id, Answer.Result)
+	status, err := logic.CheckAnswer(id, Answer.Result)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, "error")
 		return
 	}
-	err = logic.AddPoint(id)
-	if err != nil {
-		c.JSON(http.StatusBadRequest, "error")
-		return
-	}
-	c.JSON(http.StatusOK, true)
+
+	c.JSON(http.StatusOK, status)
 }

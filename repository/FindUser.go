@@ -10,9 +10,9 @@ import (
 	"log"
 )
 
-func FindUser(id primitive.ObjectID) (domain.Internaluser, error) {
+func FindUser(id primitive.ObjectID) (domain.InternalUser, error) {
 	collection, err := app.Collection()
-	var user domain.Internaluser
+	var user domain.InternalUser
 	ctx := context.TODO()
 	if err != nil {
 		log.Println("Failed to connect to Db : ", err)
@@ -21,7 +21,7 @@ func FindUser(id primitive.ObjectID) (domain.Internaluser, error) {
 	filter := bson.D{{"_id", id}}
 	err = collection.FindOne(ctx, filter).Decode(&user)
 	if err != nil {
-		panic(err)
+		return user, err
 	}
 	return user, nil
 }
