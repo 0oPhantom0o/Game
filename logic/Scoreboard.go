@@ -2,12 +2,14 @@ package logic
 
 import (
 	"game/repository"
+	"go.mongodb.org/mongo-driver/bson"
 )
 
-func ScoreBoard() error {
-	err := repository.ShowAllUsers2()
+func ScoreBoard() ([]bson.D, error) {
+	data, err := repository.ShowAllUsers()
 	if err != nil {
-		return err
+		return nil, err
 	}
-	return nil
+
+	return data, nil
 }
