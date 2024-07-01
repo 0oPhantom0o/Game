@@ -15,27 +15,16 @@ func ConvertStringToPrimivite(Id string) (primitive.ObjectID, error) {
 	return ID, nil
 }
 
-func ConvertBsonDToScoreBoard(data []domain.UserScoreBoard) ([]string, error) {
+func ConvertStructToString(data []domain.UserScoreBoard) ([]string, error) {
 
 	var formattedData []string
 
 	for _, entry := range data {
-		var nickName string
-		var point int
 
-		for _, item := range entry {
-			switch item.Key {
-			case "nickName":
-				nickName = item.Value.(string)
-			case "point":
-				point = int(item.Value.(int32))
-			}
-		}
+		fmt.Printf("%s, Point : %d\n", entry.NickName, entry.Point)
+		formattedData = append(formattedData, fmt.Sprintf("Name : %s, Point : %d", entry.NickName, entry.Point))
 
-		// Format and append to the slice
-		formattedData = append(formattedData, fmt.Sprintf("Name : %s, Point : %d", nickName, point))
 	}
-
 	return formattedData, nil
 }
 

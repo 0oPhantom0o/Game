@@ -21,6 +21,6 @@ func ScoreBoard(c *gin.Context) {
 		return
 	}
 	listOfUsers, err := logic.ScoreBoard(number)
-	scoreBoard, err := logic.ConvertBsonDToScoreBoard(listOfUsers)
-	c.JSON(http.StatusOK, listOfUsers)
+	scoreBoard, err := logic.ConvertStructToString(listOfUsers)
+	c.JSON(http.StatusOK, scoreBoard)
 }
