@@ -17,7 +17,7 @@ func ShowAllUsers(number int64) (results []bson.D, err error) {
 		return nil, fmt.Errorf("failed to connect to database: %w", err)
 	}
 	filter := bson.D{}
-	opts := options.Find().SetSort(bson.D{{"point", -1}}).SetSkip(1).SetLimit(number)
+	opts := options.Find().SetSort(bson.D{{"point", -1}}).SetLimit(number)
 	//	sortStage := bson.D{{"$sort", bson.D{{"point", -1}}}}
 	cursor, err := collection.Find(context.TODO(), filter, opts)
 	if err != nil {
