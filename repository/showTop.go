@@ -17,14 +17,15 @@ func ShowAllUsers(number int64) (results []bson.D, err error) {
 		return nil, fmt.Errorf("failed to connect to database: %w", err)
 	}
 	filter := bson.D{}
-	opts := options.Find().SetSort(bson.D{{"point", -1}}).SetLimit(number)
+	opts := options.Find().SetSort(bson.D{{"point", -1}}).SetLimit(number).SetProjection(bson.D{{"phone", 0}, {"_id", 0}})
 	cursor, err := collection.Find(context.TODO(), filter, opts)
 	if err != nil {
 		return nil, err
 	}
-	if err = cursor.All(context.TODO(), &results); err != nil {
+	err = cursor.All(context.TODO(), &results)
+	if err != nil {
 		return nil, err
 	}
-
+	fmt.Println(results)
 	return results, nil
 }
