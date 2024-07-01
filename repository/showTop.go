@@ -18,7 +18,6 @@ func ShowAllUsers(number int64) (results []bson.D, err error) {
 	}
 	filter := bson.D{}
 	opts := options.Find().SetSort(bson.D{{"point", -1}}).SetLimit(number)
-	//	sortStage := bson.D{{"$sort", bson.D{{"point", -1}}}}
 	cursor, err := collection.Find(context.TODO(), filter, opts)
 	if err != nil {
 		return nil, err
