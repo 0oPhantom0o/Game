@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
+	"strconv"
 )
 
 func ConvertStringToPrimivite(Id string) (primitive.ObjectID, error) {
@@ -49,4 +50,14 @@ func ConvertBsonDToScoreBoard(results []bson.D) ([]string, error) {
 	}
 
 	return mergedData, nil
+}
+
+func ConvertStringToInteger(stringNumber string) (int64, error) {
+	number, err := strconv.Atoi(stringNumber)
+	if err != nil {
+		return 0, fmt.Errorf("can't convert this to an int")
+	} else {
+		fmt.Println(number)
+	}
+	return int64(number), nil
 }

@@ -31,6 +31,6 @@ func setupRoute(Router *gin.Engine) {
 	Router.POST("/Auth", controller.NickName)
 	Router.GET("/Calculate", controller.Calculate)
 	Router.POST("/result", controller.Result)
-	Router.GET("/ScoreBoard", controller.ScoreBoard)
+	Router.GET("/ScoreBoard/:number", controller.ScoreBoard)
 
 }

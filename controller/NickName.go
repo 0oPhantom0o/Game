@@ -25,5 +25,5 @@ func NickName(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, "error")
 		return
 	}
-	c.JSON(http.StatusOK, tokenString)
+	c.JSON(http.StatusOK, "Hi")
 }

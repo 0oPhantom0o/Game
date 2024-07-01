@@ -5,8 +5,8 @@ import (
 	"go.mongodb.org/mongo-driver/bson"
 )
 
-func ScoreBoard() ([]bson.D, error) {
-	data, err := repository.ShowAllUsers()
+func ScoreBoard(number int64) ([]bson.D, error) {
+	data, err := repository.ShowAllUsers(number)
 	if err != nil {
 		return nil, err
 	}
