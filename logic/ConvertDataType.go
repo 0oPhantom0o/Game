@@ -1,7 +1,6 @@
 package logic
 
 import (
-	"encoding/json"
 	"fmt"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -16,40 +15,28 @@ func ConvertStringToPrimivite(Id string) (primitive.ObjectID, error) {
 	return ID, nil
 }
 
-func ConvertBsonDToScoreBoard(results []bson.D) ([]string, error) {
+func ConvertBsonDToScoreBoard(data []bson.D) ([]string, error) {
 
-	var mergedData []string
+	var formattedData []string
 
-	var nickName string
-	var point int
-	type KeyValue struct {
-		Key   string      `json:"Key"`
-		Value interface{} `json:"Value"`
-	}
-	var data []KeyValue
-	for _, result := range results {
-		jsonData, _ := json.Marshal(result)
-		strData := string(jsonData)
-		_ = json.Unmarshal([]byte(strData), &data)
-		for _, item := range data {
+	for _, entry := range data {
+		var nickName string
+		var point int
+
+		for _, item := range entry {
 			switch item.Key {
 			case "nickName":
-				if val, ok := item.Value.(string); ok {
-					nickName = val
-				}
+				nickName = item.Value.(string)
 			case "point":
-				if val, ok := item.Value.(float64); ok {
-					point = int(val)
-				}
+				point = int(item.Value.(int32))
 			}
 		}
-		if nickName != "" && point != 0 {
-			mergedData = append(mergedData, fmt.Sprintf("NickName : %s, Point : %d", nickName, point))
-		}
 
+		// Format and append to the slice
+		formattedData = append(formattedData, fmt.Sprintf("Name : %s, Point : %d", nickName, point))
 	}
 
-	return mergedData, nil
+	return formattedData, nil
 }
 
 func ConvertStringToInteger(stringNumber string) (int64, error) {
