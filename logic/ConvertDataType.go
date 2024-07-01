@@ -2,7 +2,7 @@ package logic
 
 import (
 	"fmt"
-	"go.mongodb.org/mongo-driver/bson"
+	"game/domain"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"strconv"
 )
@@ -15,7 +15,7 @@ func ConvertStringToPrimivite(Id string) (primitive.ObjectID, error) {
 	return ID, nil
 }
 
-func ConvertBsonDToScoreBoard(data []bson.D) ([]string, error) {
+func ConvertBsonDToScoreBoard(data []domain.UserScoreBoard) ([]string, error) {
 
 	var formattedData []string
 

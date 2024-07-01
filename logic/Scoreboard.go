@@ -1,14 +1,14 @@
 package logic
 
 import (
+	"game/domain"
 	"game/repository"
-	"go.mongodb.org/mongo-driver/bson"
 )
 
-func ScoreBoard(number int64) ([]bson.D, error) {
+func ScoreBoard(number int64) ([]domain.UserScoreBoard, error) {
 	data, err := repository.ShowAllUsers(number)
 	if err != nil {
-		return nil, err
+		return data, err
 	}
 
 	return data, nil
