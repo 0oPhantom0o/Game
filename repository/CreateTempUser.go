@@ -17,6 +17,7 @@ func TempUser(phone, code string) error {
 	}
 	return nil
 }
+
 func UserResult(id, answer string) error {
 	rdb := app.RedisDB
 	ctx := context.Background()

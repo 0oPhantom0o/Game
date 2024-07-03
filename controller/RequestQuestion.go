@@ -13,7 +13,11 @@ func Calculate(c *gin.Context) {
 		c.JSON(http.StatusUnauthorized, "error")
 		return
 	}
-	number, err := logic.NumberForUser(Id)
-	c.JSON(http.StatusOK, number)
+	question, err := logic.Question(Id)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, "error")
+		return
+	}
+	c.JSON(http.StatusOK, question)
 
 }

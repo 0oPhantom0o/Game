@@ -1,7 +1,6 @@
 package logic
 
 import (
-	"fmt"
 	"game/constants"
 	"github.com/golang-jwt/jwt/v5"
 	"time"
@@ -10,18 +9,17 @@ import (
 var secretKey = []byte(constants.SecretKey)
 
 func GenerateToken(Id string) (string, error) {
-	token := jwt.NewWithClaims(jwt.SigningMethodHS256,
+	tokenGenerator := jwt.NewWithClaims(jwt.SigningMethodHS256,
 		jwt.MapClaims{
 			"ID":  Id,
 			"exp": time.Now().Add(time.Hour * 24).Unix(),
 		})
 
-	tokenString, err := token.SignedString(secretKey)
-	fmt.Println(tokenString)
+	token, err := tokenGenerator.SignedString(secretKey)
 
 	if err != nil {
 		return "", err
 	}
 
-	return tokenString, nil
+	return token, nil
 }

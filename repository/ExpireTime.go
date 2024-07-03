@@ -3,14 +3,15 @@ package repository
 import (
 	"context"
 	"game/app"
+	"time"
 )
 
-func FindUserTempData(id string) (string, error) {
+func ExpireTime(key string) bool {
 	rdb := app.RedisDB
 	ctx := context.Background()
-	code, err := rdb.Get(ctx, id).Result()
+	err := rdb.Expire(ctx, key, 10*time.Minute)
 	if err != nil {
-		return "", err
+		return false
 	}
-	return code, nil
+	return true
 }

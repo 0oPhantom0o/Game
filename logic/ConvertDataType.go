@@ -7,7 +7,7 @@ import (
 	"strconv"
 )
 
-func ConvertStringToPrimivite(Id string) (primitive.ObjectID, error) {
+func ConvertStringToPrimitive(Id string) (primitive.ObjectID, error) {
 	ID, err := primitive.ObjectIDFromHex(Id)
 	if err != nil {
 		return primitive.NilObjectID, err
@@ -36,4 +36,12 @@ func ConvertStringToInteger(stringNumber string) (int64, error) {
 		fmt.Println(number)
 	}
 	return int64(number), nil
+}
+
+func ConvertIntegerToString(n1, n2, answer int) (string, string) {
+	number1 := strconv.Itoa(n1)
+	number2 := strconv.Itoa(n2)
+	result := strconv.Itoa(answer)
+	question := number1 + number2
+	return question, result
 }

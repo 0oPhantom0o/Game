@@ -3,7 +3,7 @@ package logic
 import "game/repository"
 
 func ChangePoint(id string, point int) error {
-	mongoId, err := ConvertStringToPrimivite(id)
+	mongoId, err := ConvertStringToPrimitive(id)
 	if err != nil {
 		return err
 	}

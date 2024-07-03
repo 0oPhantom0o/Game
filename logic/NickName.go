@@ -2,17 +2,12 @@ package logic
 
 import (
 	"game/repository"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
-func NickName(NickName, id string) error {
-	primiviteId, err := ConvertStringToPrimivite(id)
-	if err != nil {
-		return err
-	}
-	if err != nil {
-		return err
-	}
-	err = repository.UpdateUser(primiviteId, NickName)
+func NickName(NickName string, primitiveId primitive.ObjectID) error {
+
+	err := repository.UpdateUser(primitiveId, NickName)
 	if err != nil {
 		return err
 	}

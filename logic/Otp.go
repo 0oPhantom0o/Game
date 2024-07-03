@@ -5,8 +5,8 @@ import (
 	"game/repository"
 )
 
-func CompareOtp(phone, code string) error {
-	storedCode, err := repository.FindUserTempData(phone)
+func CheckOtp(phone, code string) error {
+	storedCode, err := repository.FindUserValue(phone)
 	if err != nil {
 		return err
 	}

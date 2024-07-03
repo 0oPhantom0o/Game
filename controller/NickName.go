@@ -19,11 +19,16 @@ func NickName(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, "bad request")
 		return
 	}
+	primitiveId, err := logic.ConvertStringToPrimitive(id)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, "bad request")
+		return
+	}
 
-	err = logic.NickName(user.NickName, id)
+	err = logic.NickName(user.NickName, primitiveId)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, "error")
 		return
 	}
-	c.JSON(http.StatusOK, "Hi")
+	c.JSON(http.StatusOK, "nickName changed to : "+user.NickName)
 }

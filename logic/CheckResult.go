@@ -6,9 +6,9 @@ import (
 )
 
 func CheckAnswer(id, answer string) (bool, error) {
-	result, err := repository.FindUserTempData(id)
+	result, err := repository.FindUserValue(id)
 	if err != nil {
-		return false, err
+		return false, fmt.Errorf("too late... find new question ")
 	}
 	if result == answer {
 		err = ChangePoint(id, 1)

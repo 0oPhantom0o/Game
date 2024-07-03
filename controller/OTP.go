@@ -8,25 +8,26 @@ import (
 )
 
 func GetOtp(c *gin.Context) {
+
 	var user domain.User
 	if err := c.BindJSON(&user); err != nil {
-		c.JSON(http.StatusBadRequest, "error")
+		c.JSON(http.StatusBadRequest, "bad request error")
 		return
 	}
-	err := logic.CompareOtp(user.Phone, user.RandomCode)
+	err := logic.CheckOtp(user.Phone, user.RandomCode)
 	if err != nil {
-		c.JSON(http.StatusBadRequest, "error")
+		c.JSON(http.StatusBadRequest, "wronged otp")
 		return
 	}
 	id, err := logic.GenerateUser(&user)
 	if err != nil {
-		c.JSON(http.StatusBadRequest, "error")
+		c.JSON(http.StatusBadRequest, "failed to create user")
 
 		return
 	}
 	token, err := logic.GenerateToken(id)
 	if err != nil {
-		c.JSON(http.StatusBadRequest, "error")
+		c.JSON(http.StatusBadRequest, "failed to generate token")
 
 		return
 	}
