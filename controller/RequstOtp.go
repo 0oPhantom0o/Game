@@ -13,7 +13,7 @@ func RequestOtp(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, "Bad request error")
 		return
 	}
-	err := logic.TempUser(user)
+	err := logic.TempUser(user.Phone)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, err)
 		return

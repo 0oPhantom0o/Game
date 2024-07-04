@@ -10,8 +10,8 @@ import (
 	"log"
 )
 
-func ShowAllUsers(number int64) ([]domain.UserScoreBoard, error) {
-	var userScoreboard []domain.UserScoreBoard
+func ShowAllUsers(number int64) ([]domain.InternalUser, error) {
+	var userScoreboard []domain.InternalUser
 
 	collection, err := app.Collection()
 
@@ -30,6 +30,5 @@ func ShowAllUsers(number int64) ([]domain.UserScoreBoard, error) {
 	if err != nil {
 		return userScoreboard, err
 	}
-	fmt.Println(userScoreboard)
 	return userScoreboard, nil
 }

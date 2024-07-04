@@ -6,7 +6,7 @@ import (
 )
 
 func CheckOtp(phone, code string) error {
-	storedCode, err := repository.FindUserValue(phone)
+	storedCode, err := repository.FindRedisValue(phone)
 	if err != nil {
 		return err
 	}

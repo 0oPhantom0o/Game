@@ -15,13 +15,12 @@ func ConvertStringToPrimitive(Id string) (primitive.ObjectID, error) {
 	return ID, nil
 }
 
-func ConvertStructToString(data []domain.UserScoreBoard) ([]string, error) {
+func ConvertStructToString(data []domain.InternalUser) ([]string, error) {
 
 	var formattedData []string
 
 	for _, entry := range data {
 
-		fmt.Printf("%s, Point : %d\n", entry.NickName, entry.Point)
 		formattedData = append(formattedData, fmt.Sprintf("Name : %s, Point : %d", entry.NickName, entry.Point))
 
 	}

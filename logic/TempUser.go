@@ -2,17 +2,16 @@ package logic
 
 import (
 	"fmt"
-	"game/domain"
 	"game/repository"
 )
 
-func TempUser(user domain.User) error {
+func TempUser(phone string) error {
 	code, err := randomCode()
 	if err != nil {
 		return err
 	}
 
-	limitCounter, rateLimit := repository.OTPLimit(user.Phone)
+	limitCounter, rateLimit := repository.OTPLimit(phone)
 	if limitCounter == 1 {
 		err := repository.ExpireTime(rateLimit)
 		if err != true {
@@ -23,7 +22,7 @@ func TempUser(user domain.User) error {
 		return fmt.Errorf("user Limited")
 	}
 
-	err = repository.TempUser(user.Phone, code)
+	err = repository.RedisDataSet(phone, code, "")
 	if err != nil {
 		return err
 	}

@@ -5,7 +5,7 @@ import (
 	"game/app"
 )
 
-func FindUserValue(id string) (string, error) {
+func FindRedisValue(id string) (string, error) {
 	rdb := app.RedisDB
 	ctx := context.Background()
 	value, err := rdb.Get(ctx, id).Result()

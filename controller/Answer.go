@@ -14,13 +14,13 @@ func Result(c *gin.Context) {
 		c.JSON(http.StatusUnauthorized, "error")
 		return
 	}
-	var Answer domain.Answer
-	if err := c.BindJSON(&Answer); err != nil {
+	var User domain.User
+	if err := c.BindJSON(&User); err != nil {
 		c.JSON(http.StatusBadRequest, "error")
 		return
 	}
 
-	status, err := logic.CheckAnswer(id, Answer.Result)
+	status, err := logic.CheckAnswer(id, User.Result)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, "error")
 		return

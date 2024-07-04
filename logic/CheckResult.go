@@ -6,7 +6,7 @@ import (
 )
 
 func CheckAnswer(id, answer string) (bool, error) {
-	result, err := repository.FindUserValue(id)
+	result, err := repository.FindRedisValue(id)
 	if err != nil {
 		return false, fmt.Errorf("too late... find new question ")
 	}

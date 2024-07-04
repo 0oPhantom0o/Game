@@ -8,7 +8,7 @@ import (
 
 func Question(id string) (string, error) {
 	question, answer := QuestionGenerator()
-	err := repository.UserResult(id, answer)
+	err := repository.RedisDataSet(id, answer, "1")
 	if err != nil {
 		return "", err
 	}
