@@ -28,6 +28,7 @@ func setupRoute(Router *gin.Engine) {
 	//setup routes
 	Router.POST("/sign_up", controller.RequestOtp)
 	Router.POST("/sign_in", controller.GetOtp)
+	Router.POST("/login", controller.Login)
 	Router.POST("/Auth", controller.NickName)
 	Router.GET("/Calculate", controller.Calculate)
 	Router.POST("/result", controller.Result)

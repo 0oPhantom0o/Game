@@ -1,6 +1,6 @@
 package logic
 
-func randomCode() (string, error) {
+func RandomCode() (string, error) {
 
 	code := "1234"
 	return code, nil

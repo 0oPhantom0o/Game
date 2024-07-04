@@ -1,18 +1,18 @@
 package logic
 
-import "game/repository"
+import (
+	"game/repository"
+	"go.mongodb.org/mongo-driver/bson/primitive"
+)
 
-func ChangePoint(id string, point int) error {
-	mongoId, err := ConvertStringToPrimitive(id)
-	if err != nil {
-		return err
-	}
-	userData, err := repository.FindUser(mongoId)
-	if err != nil {
-		return err
-	}
-	userData.Point = point
-	err = repository.ChangePoint(userData, mongoId)
+func ChangePoint(id primitive.ObjectID, point int) error {
+
+	//userData, err := repository.FindUser(id)
+	//if err != nil {
+	//	return err
+	//}
+	//userData.Point = point
+	err := repository.ChangePoint(point, id)
 	if err != nil {
 		return err
 	}

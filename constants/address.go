@@ -7,6 +7,7 @@ const (
 )
 
 const (
+	//mongo collection name
 	Database       = "Game"
 	UserCollection = "User"
 )

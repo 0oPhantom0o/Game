@@ -5,26 +5,22 @@ import (
 	"game/repository"
 )
 
-func TempUser(phone string) error {
-	code, err := randomCode()
-	if err != nil {
-		return err
-	}
+func TempUser(phone, code string) error {
 
 	limitCounter, rateLimit := repository.OTPLimit(phone)
 	if limitCounter == 1 {
 		err := repository.ExpireTime(rateLimit)
 		if err != true {
-			fmt.Println("error")
+			return fmt.Errorf("error in expire time set")
 		}
 	}
 	if limitCounter == 5 {
 		return fmt.Errorf("user Limited")
 	}
 
-	err = repository.RedisDataSet(phone, code, "")
+	err := repository.RedisDataSet(phone, code, "TempUser")
 	if err != nil {
-		return err
+		return fmt.Errorf("couldnt insert user in temp database")
 	}
 	return nil
 }

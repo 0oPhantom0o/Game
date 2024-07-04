@@ -7,22 +7,23 @@ import (
 	"net/http"
 )
 
-func RequestOtp(c *gin.Context) {
+func Login(c *gin.Context) {
 	var user domain.User
 	if err := c.BindJSON(&user); err != nil {
 		c.JSON(http.StatusBadRequest, "Bad request error")
 		return
 	}
-	code, err := logic.RandomCode()
+	id, err := logic.FindUser(user.Phone)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, "error")
+		c.JSON(http.StatusBadRequest, "failed to find user")
 		return
 	}
 
-	err = logic.TempUser(user.Phone, code)
+	token, err := logic.GenerateToken(id)
 	if err != nil {
-		c.JSON(http.StatusBadRequest, err)
+		c.JSON(http.StatusBadRequest, "failed to generate token")
+
 		return
 	}
-	c.JSON(http.StatusOK, "Code is sent")
+	c.JSON(http.StatusOK, token)
 }

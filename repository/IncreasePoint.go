@@ -4,13 +4,12 @@ import (
 	"context"
 	"fmt"
 	"game/app"
-	"game/domain"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"log"
 )
 
-func ChangePoint(user domain.InternalUser, id primitive.ObjectID) error {
+func ChangePoint(point int, id primitive.ObjectID) error {
 	collection, err := app.Collection()
 	ctx := context.Background()
 	if err != nil {
@@ -18,7 +17,7 @@ func ChangePoint(user domain.InternalUser, id primitive.ObjectID) error {
 		return fmt.Errorf("failed to connect to database: %w", err)
 	}
 	filter := bson.D{{"_id", id}}
-	update := bson.D{{"$inc", bson.D{{"point", user.Point}}}}
+	update := bson.D{{"$inc", bson.D{{"point", point}}}}
 
 	_, err = collection.UpdateOne(ctx, filter, update)
 	if err != nil {

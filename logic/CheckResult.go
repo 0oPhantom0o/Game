@@ -8,21 +8,10 @@ import (
 func CheckAnswer(id, answer string) (bool, error) {
 	result, err := repository.FindRedisValue(id)
 	if err != nil {
-		return false, fmt.Errorf("too late... find new question ")
+		return false, fmt.Errorf("too late... search new question ")
 	}
 	if result == answer {
-		err = ChangePoint(id, 1)
-		if err != nil {
-			return false, err
-		}
 		return true, nil
 	}
-	if result != answer {
-		err = ChangePoint(id, -1)
-		if err != nil {
-			return false, err
-		}
-		return false, nil
-	}
-	return false, fmt.Errorf("answer is wronge")
+	return false, nil
 }

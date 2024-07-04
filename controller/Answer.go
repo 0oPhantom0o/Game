@@ -25,6 +25,21 @@ func Result(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, "error")
 		return
 	}
+	mongoId, _ := logic.ConvertStringToPrimitive(id)
+
+	if status == true {
+		err = logic.ChangePoint(mongoId, 1)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, "error")
+			return
+		}
+	} else {
+		err = logic.ChangePoint(mongoId, -1)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, "error")
+			return
+		}
+	}
 
 	c.JSON(http.StatusOK, status)
 }

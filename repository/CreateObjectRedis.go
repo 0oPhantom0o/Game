@@ -5,22 +5,21 @@ import (
 	"fmt"
 	"game/app"
 	"game/constants"
-	"time"
 )
 
 func RedisDataSet(key, value, dataType string) error {
 	rdb := app.RedisDB
 	ctx := context.Background()
-	if dataType == "" {
-		_, err := rdb.Set(ctx, key, value, 10*time.Minute).Result()
+	if dataType == "TempUser" {
+		_, err := rdb.Set(ctx, key, value, constants.TempUserExpireTIme).Result()
 		if err != nil {
-			return fmt.Errorf("couldnt insert data in redis database")
+			return fmt.Errorf("couldnt insert TempUser in redis database")
 
 		}
-	} else {
-		_, err := rdb.Set(ctx, key, value, constants.RedisExpireTime).Result()
+	} else if dataType == "question" {
+		_, err := rdb.Set(ctx, key, value, constants.QuestionExpireTime).Result()
 		if err != nil {
-			return fmt.Errorf("couldnt insert data in redis database")
+			return fmt.Errorf("couldnt insert question in redis database")
 		}
 	}
 	return nil
