@@ -20,6 +20,14 @@ func ScoreBoard(c *gin.Context) {
 		return
 	}
 	userList, err := logic.ScoreBoard(number)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, err)
+		return
+	}
 	scoreBoard, err := logic.ConvertStructToString(userList)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, err)
+		return
+	}
 	c.JSON(http.StatusOK, scoreBoard)
 }

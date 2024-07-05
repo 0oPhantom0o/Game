@@ -12,4 +12,5 @@ func NickName(NickName string, primitiveId primitive.ObjectID) error {
 		return err
 	}
 	return nil
+
 }

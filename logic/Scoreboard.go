@@ -12,4 +12,5 @@ func ScoreBoard(number int64) ([]domain.InternalUser, error) {
 	}
 
 	return data, nil
+
 }

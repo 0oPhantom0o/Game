@@ -20,6 +20,7 @@ func GenerateToken(Id primitive.ObjectID) (string, error) {
 
 	if err != nil {
 		return "", err
+
 	}
 
 	return token, nil

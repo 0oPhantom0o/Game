@@ -9,7 +9,7 @@ import (
 
 func VerifyToken(reqToken string) (string, error) {
 	if reqToken == "" {
-		return "", fmt.Errorf("there is no token")
+		return "", fmt.Errorf("invalid token")
 	}
 	splitToken := strings.Split(reqToken, "Bearer")
 
@@ -19,7 +19,10 @@ func VerifyToken(reqToken string) (string, error) {
 	token, err := jwt.ParseWithClaims(tokenString, &userClaim, func(token *jwt.Token) (interface{}, error) {
 		return secretKey, nil
 	})
-	if err != nil || !token.Valid {
+	if err != nil {
+		return "", fmt.Errorf("some problem in decoding jwt")
+	}
+	if !token.Valid {
 		return "", fmt.Errorf("invalid token")
 	}
 	Id := userClaim.ID

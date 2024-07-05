@@ -19,7 +19,7 @@ func GetOtp(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, "wronged otp")
 		return
 	}
-	id, err := logic.GenerateUser(&user)
+	id, err := logic.GenerateUser(user.Phone)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, "failed to create user")
 		return

@@ -6,7 +6,7 @@ import (
 )
 
 func TempUser(phone, code string) error {
-
+	//limiting request otp
 	limitCounter, rateLimit := repository.OTPLimit(phone)
 	if limitCounter == 1 {
 		err := repository.ExpireTime(rateLimit)

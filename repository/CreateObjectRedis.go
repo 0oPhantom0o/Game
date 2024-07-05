@@ -10,6 +10,7 @@ import (
 func RedisDataSet(key, value, dataType string) error {
 	rdb := app.RedisDB
 	ctx := context.Background()
+
 	if dataType == "TempUser" {
 		_, err := rdb.Set(ctx, key, value, constants.TempUserExpireTIme).Result()
 		if err != nil {

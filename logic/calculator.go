@@ -10,13 +10,9 @@ func Question(id string) (string, error) {
 	question, answer := QuestionGenerator()
 	err := repository.RedisDataSet(id, answer, "question")
 	if err != nil {
-		return "", err
+		return "", fmt.Errorf("data didnt inserted")
 	}
-	boolError := repository.ExpireTime(id)
 
-	if boolError != true {
-		return "", fmt.Errorf("error in expire section")
-	}
 	return question, nil
 }
 

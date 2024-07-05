@@ -7,12 +7,7 @@ import (
 
 func ChangePoint(id primitive.ObjectID, point int) error {
 
-	//userData, err := repository.FindUser(id)
-	//if err != nil {
-	//	return err
-	//}
-	//userData.Point = point
-	err := repository.ChangePoint(point, id)
+	err := repository.ChangePoint(id, point)
 	if err != nil {
 		return err
 	}

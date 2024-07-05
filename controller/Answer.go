@@ -22,7 +22,7 @@ func Result(c *gin.Context) {
 
 	status, err := logic.CheckAnswer(id, User.Result)
 	if err != nil {
-		c.JSON(http.StatusBadRequest, "error")
+		c.JSON(http.StatusBadRequest, err)
 		return
 	}
 	mongoId, _ := logic.ConvertStringToPrimitive(id)

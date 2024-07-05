@@ -13,6 +13,7 @@ func CheckOtp(phone, code string) error {
 	if storedCode == code && storedCode != "" {
 		return nil
 	}
+
 	return fmt.Errorf("error in compare otp")
 
 }

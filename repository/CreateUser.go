@@ -8,14 +8,14 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
-func CreateUser(client *domain.User) (primitive.ObjectID, error) {
+func CreateUser(phone string) (primitive.ObjectID, error) {
 	collection, err := app.Collection()
 	ctx := context.Background()
 	if err != nil {
 		return primitive.NilObjectID, fmt.Errorf("failed to connect to database: %w", err)
 	}
 	user := domain.InternalUser{
-		Phone:    client.Phone,
+		Phone:    phone,
 		NickName: "",
 		Point:    0,
 	}
@@ -27,8 +27,8 @@ func CreateUser(client *domain.User) (primitive.ObjectID, error) {
 	if !Err {
 		return primitive.NilObjectID, fmt.Errorf("failed to convert inserted ID to ObjectID")
 	}
-	return objectID, nil
 
+	return objectID, nil
 }
 
 //user2 := domain.InternalUser{

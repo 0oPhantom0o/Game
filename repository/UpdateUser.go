@@ -15,6 +15,7 @@ func UpdateUser(id primitive.ObjectID, nickname string) error {
 		return fmt.Errorf("failed to connect to database: %w", err)
 	}
 	filter := bson.D{{"_id", id}}
+	//update nickname
 	update := bson.D{{"$set", bson.D{{"nickName", nickname}}}}
 	_, err = collection.UpdateOne(ctx, filter, update)
 	if err != nil {

@@ -30,7 +30,7 @@ func ConvertStructToString(data []domain.InternalUser) ([]string, error) {
 func ConvertStringToInteger(stringNumber string) (int64, error) {
 	number, err := strconv.Atoi(stringNumber)
 	if err != nil {
-		return 0, fmt.Errorf("can't convert this to an int")
+		return 0, fmt.Errorf("can't convert this to an int ")
 	} else {
 		fmt.Println(number)
 	}
@@ -41,6 +41,6 @@ func ConvertIntegerToString(n1, n2, answer int) (string, string) {
 	number1 := strconv.Itoa(n1)
 	number2 := strconv.Itoa(n2)
 	result := strconv.Itoa(answer)
-	question := number1 + number2
+	question := number1 + " + " + number2
 	return question, result
 }

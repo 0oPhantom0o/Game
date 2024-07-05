@@ -6,9 +6,11 @@ import (
 )
 
 func FindUser(name string) (primitive.ObjectID, error) {
+
 	id, err := repository.FindUserByName(name)
 	if err != nil {
 		return primitive.NilObjectID, err
 	}
+
 	return id, nil
 }
