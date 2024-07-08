@@ -15,10 +15,12 @@ func CreateUser(phone string) (string, error) {
 		return "", fmt.Errorf("failed to connect to database: %w", err)
 	}
 	user := domain.InternalUser{
-		Phone:    phone,
-		NickName: "",
-		Point:    0,
+		Phone:         phone,
+		NickName:      "",
+		NickNameLimit: 0,
+		Point:         0,
 	}
+
 	result, err := collection.InsertOne(ctx, user)
 	if err != nil {
 		return "", fmt.Errorf("failed to insert user into collection: %w", err)
@@ -31,33 +33,39 @@ func CreateUser(phone string) (string, error) {
 	return objectID.Hex(), nil
 }
 
-//user2 := domain.InternalUser{
-//	Phone:    "akbar",
-//	NickName: "",
-//	Point:    5,
-//}
-//user3 := domain.InternalUser{
-//	Phone:    "ali",
-//	NickName: "",
-//	Point:    3,
-//}
-//user4 := domain.InternalUser{
-//	Phone:    "asqar",
-//	NickName: "",
-//	Point:    15,
-//}
-//user5 := domain.InternalUser{
-//	Phone:    "mohsen",
-//	NickName: "",
-//	Point:    2,
-//}
-//user6 := domain.InternalUser{
-//	Phone:    "client.Phone",
-//	NickName: "",
-//	Point:    -2,
-//}
-//_, _ = collection.InsertOne(ctx, user2)
-//_, _ = collection.InsertOne(ctx, user3)
-//_, _ = collection.InsertOne(ctx, user4)
-//_, _ = collection.InsertOne(ctx, user5)
-//_, _ = collection.InsertOne(ctx, user6)
+/*	user2 := domain.InternalUser{
+		Phone:         "akbar",
+		NickName:      "as",
+		NickNameLimit: 1,
+		Point:         15,
+	}
+	user3 := domain.InternalUser{
+		Phone:         "ali",
+		NickName:      "qew",
+		NickNameLimit: 1,
+		Point:         3,
+	}
+	user4 := domain.InternalUser{
+		Phone:         "asqar",
+		NickName:      "ert",
+		NickNameLimit: 1,
+		Point:         15,
+	}
+	user5 := domain.InternalUser{
+		Phone:         "mohsen",
+		NickName:      "1245",
+		NickNameLimit: 1,
+		Point:         2,
+	}
+	user6 := domain.InternalUser{
+		Phone:         "client.Phone",
+		NickName:      "dgjyt",
+		NickNameLimit: 1,
+		Point:         -2,
+	}
+	_, _ = collection.InsertOne(ctx, user2)
+	_, _ = collection.InsertOne(ctx, user3)
+	_, _ = collection.InsertOne(ctx, user4)
+	_, _ = collection.InsertOne(ctx, user5)
+	_, _ = collection.InsertOne(ctx, user6)
+*/

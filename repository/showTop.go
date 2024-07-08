@@ -18,7 +18,7 @@ func ShowAllUsers(number int64) ([]domain.InternalUser, error) {
 	filter := bson.D{}
 
 	//only get nickname and point
-	opts := options.Find().SetSort(bson.D{{"point", -1}}).SetLimit(number).SetProjection(bson.D{{"phone", 0}, {"_id", 0}})
+	opts := options.Find().SetSort(bson.D{{"point", -1}}).SetLimit(number).SetProjection(bson.D{{"phone", 0}, {"_id", 0}, {"nickNameLimit", 0}})
 	cursor, err := collection.Find(context.TODO(), filter, opts)
 	if err != nil {
 		return userScoreboard, err

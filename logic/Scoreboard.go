@@ -6,7 +6,7 @@ import (
 )
 
 func ScoreBoard(number string) ([]domain.InternalUser, error) {
-	count, err := ConvertStringToInteger(number)
+	count, err := convertStringToInteger(number)
 	if err != nil {
 		return nil, err
 	}

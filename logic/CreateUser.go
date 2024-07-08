@@ -8,25 +8,26 @@ import (
 
 func GenerateUser(phone, randomCode string) (string, error) {
 	//limiting wronged answers
-	limitCounter, PhoneLimit := repository.OTPAnswerLimit(phone)
-	if limitCounter == constants.WrongedAnswerOtpBase {
-		err := repository.ExpireWrongedAnswerTime(PhoneLimit)
-		if err != true {
-			return "", fmt.Errorf("error in expire time set")
-		}
-	}
-	if limitCounter == constants.WrongedAnswerOtpLimit {
-		return "", fmt.Errorf("user Limited wait 10 minutes")
-	}
-
 	status, err := checkOtp(phone, randomCode)
 	if err != nil {
 		return "", err
 	}
 
 	if !status {
+		limitCounter, PhoneLimit := repository.OTPAnswerLimit(phone)
+		if limitCounter == constants.WrongedAnswerOtpBase {
+			err := repository.ExpireWrongedAnswerTime(PhoneLimit)
+			if err != true {
+				return "", fmt.Errorf("error in expire time set")
+			}
+		}
+		if limitCounter == constants.WrongedAnswerOtpLimit {
+			return "", fmt.Errorf("user Limited wait 10 minutes")
+		}
+
 		return "", fmt.Errorf("wronge answer")
 	}
+
 	id, err := repository.CreateUser(phone)
 	if err != nil {
 		return "", err

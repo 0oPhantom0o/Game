@@ -21,7 +21,7 @@ func QaGenerator() (string, string) {
 	number1 := rand.Intn(10)
 	number2 := rand.Intn(10)
 	result := number1 + number2
-	question, answer := ConvertIntegerToString(number1, number2, result)
+	question, answer := convertIntegerToString(number1, number2, result)
 	fmt.Println(question)
 	return question, answer
 }

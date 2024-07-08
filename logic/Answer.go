@@ -29,7 +29,7 @@ func CheckAnswer(id, answer string) (bool, error) {
 }
 
 func changePoint(id string, point int) error {
-	mongoId, err := ConvertStringToPrimitive(id)
+	mongoId, err := convertStringToPrimitive(id)
 	if err != nil {
 		return err
 	}

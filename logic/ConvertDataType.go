@@ -6,7 +6,7 @@ import (
 	"strconv"
 )
 
-func ConvertStringToPrimitive(Id string) (primitive.ObjectID, error) {
+func convertStringToPrimitive(Id string) (primitive.ObjectID, error) {
 	ID, err := primitive.ObjectIDFromHex(Id)
 	if err != nil {
 		return primitive.NilObjectID, err
@@ -14,7 +14,24 @@ func ConvertStringToPrimitive(Id string) (primitive.ObjectID, error) {
 	return ID, nil
 }
 
-//
+func convertStringToInteger(stringNumber string) (int64, error) {
+	number, err := strconv.Atoi(stringNumber)
+	if err != nil {
+		return 0, fmt.Errorf("can't convert this to an int ")
+	} else {
+		fmt.Println(number)
+	}
+	return int64(number), nil
+}
+
+func convertIntegerToString(n1, n2, answer int) (string, string) {
+	number1 := strconv.Itoa(n1)
+	number2 := strconv.Itoa(n2)
+	result := strconv.Itoa(answer)
+	question := number1 + " + " + number2
+	return question, result
+}
+
 //func ConvertStructToString(data []domain.InternalUser) ([]string, error) {
 //
 //	var formattedData []string
@@ -25,36 +42,4 @@ func ConvertStringToPrimitive(Id string) (primitive.ObjectID, error) {
 //
 //	}
 //	return formattedData, nil
-//}
-
-func ConvertStringToInteger(stringNumber string) (int64, error) {
-	number, err := strconv.Atoi(stringNumber)
-	if err != nil {
-		return 0, fmt.Errorf("can't convert this to an int ")
-	} else {
-		fmt.Println(number)
-	}
-	return int64(number), nil
-}
-
-func ConvertIntegerToString(n1, n2, answer int) (string, string) {
-	number1 := strconv.Itoa(n1)
-	number2 := strconv.Itoa(n2)
-	result := strconv.Itoa(answer)
-	question := number1 + " + " + number2
-	return question, result
-}
-
-//type IntToStr struct {
-//	number1 int
-//	number2 int
-//	result int
-//}
-//
-//func (i IntToStr) conv() (n1,n2,r string) {
-//	n1 := strconv.Itoa(i.number1)
-//	n2 := strconv.Itoa(i.number2)
-//	r := strconv.Itoa(i.result)
-//	return n1,n2,r
-//
 //}
