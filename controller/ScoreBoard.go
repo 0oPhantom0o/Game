@@ -13,9 +13,9 @@ func ScoreBoard(c *gin.Context) {
 		c.JSON(http.StatusUnauthorized, "error")
 		return
 	}
-	number := c.Param("number")
-
-	scoreBoard, err := logic.ScoreBoard(number)
+	number := c.DefaultQuery("page", "1")
+	limit := c.DefaultQuery("count", "10")
+	scoreBoard, err := logic.ScoreBoard(number, limit)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, err)
 		return

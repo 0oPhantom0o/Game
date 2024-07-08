@@ -14,6 +14,7 @@ func CreateUser(phone string) (string, error) {
 	if err != nil {
 		return "", fmt.Errorf("failed to connect to database: %w", err)
 	}
+
 	user := domain.InternalUser{
 		Phone:         phone,
 		NickName:      "",
@@ -33,39 +34,14 @@ func CreateUser(phone string) (string, error) {
 	return objectID.Hex(), nil
 }
 
-/*	user2 := domain.InternalUser{
-		Phone:         "akbar",
-		NickName:      "as",
-		NickNameLimit: 1,
-		Point:         15,
-	}
-	user3 := domain.InternalUser{
-		Phone:         "ali",
-		NickName:      "qew",
-		NickNameLimit: 1,
-		Point:         3,
-	}
-	user4 := domain.InternalUser{
-		Phone:         "asqar",
-		NickName:      "ert",
-		NickNameLimit: 1,
-		Point:         15,
-	}
-	user5 := domain.InternalUser{
-		Phone:         "mohsen",
-		NickName:      "1245",
-		NickNameLimit: 1,
-		Point:         2,
-	}
-	user6 := domain.InternalUser{
-		Phone:         "client.Phone",
-		NickName:      "dgjyt",
-		NickNameLimit: 1,
-		Point:         -2,
-	}
-	_, _ = collection.InsertOne(ctx, user2)
-	_, _ = collection.InsertOne(ctx, user3)
-	_, _ = collection.InsertOne(ctx, user4)
-	_, _ = collection.InsertOne(ctx, user5)
-	_, _ = collection.InsertOne(ctx, user6)
-*/
+//for i := 0; i < 50; i++ {
+//	_, err := collection.InsertOne(ctx, domain.InternalUser{
+//		Phone:         strconv.Itoa(rand.Intn(10000)),
+//		NickName:      strconv.Itoa(rand.Intn(10000)),
+//		NickNameLimit: 1,
+//		Point:         rand.Intn(100),
+//	})
+//	if err != nil {
+//		return "", err
+//	}
+//}

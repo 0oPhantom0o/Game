@@ -26,5 +26,5 @@ const (
 	Game            = "/game"
 	RequestQuestion = "/question"
 	SubmitAnswer    = "/answer"
-	ShowTopPlayers  = "/ScoreBoard/:number"
+	ShowTopPlayers  = "/scoreboard/"
 )

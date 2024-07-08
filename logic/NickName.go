@@ -11,8 +11,8 @@ func UpdateNickName(NickName, id string) error {
 		return err
 	}
 	count, err := repository.FindUserByID(primitiveId)
-	if count != 0 {
-		return fmt.Errorf("you changed nickname 1 time")
+	if count > 2 {
+		return fmt.Errorf("you changed nickname 2 time")
 	}
 	err = repository.UpdateNickName(primitiveId, NickName)
 	if err != nil {

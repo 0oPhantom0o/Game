@@ -5,12 +5,15 @@ import (
 	"game/repository"
 )
 
-func ScoreBoard(number string) ([]domain.InternalUser, error) {
-	count, err := convertStringToInteger(number)
+func ScoreBoard(number, limit string) ([]domain.TopPlayers, error) {
+
+	page, err := convertStringToInteger(number)
+	count, err := convertStringToInteger(limit)
+
 	if err != nil {
 		return nil, err
 	}
-	scoreBoard, err := repository.ShowAllUsers(count)
+	scoreBoard, err := repository.ShowUsers(page, count)
 	if err != nil {
 		return nil, err
 	}

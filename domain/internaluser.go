@@ -6,3 +6,8 @@ type InternalUser struct {
 	NickNameLimit int    `bson:"nickNameLimit"`
 	Point         int    `json:"point" bson:"point"`
 }
+
+type TopPlayers struct {
+	NickName string `json:"nickName" bson:"nickName"`
+	Point    int    `json:"point" bson:"point"`
+}
