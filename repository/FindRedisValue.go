@@ -1,14 +1,17 @@
 package repository
 
-import (
-	"context"
-	"game/app"
-)
+func FindStoredOtp(id string) (string, error) {
 
-func FindRedisValue(id string) (string, error) {
-	rdb := app.RedisDB
-	ctx := context.Background()
-	value, err := rdb.Get(ctx, id).Result()
+	value, err := Rdb.Get(Ctx, id).Result()
+	if err != nil {
+		return "", err
+	}
+	return value, nil
+
+}
+func FindAnswer(id string) (string, error) {
+
+	value, err := Rdb.Get(Ctx, id).Result()
 	if err != nil {
 		return "", err
 	}

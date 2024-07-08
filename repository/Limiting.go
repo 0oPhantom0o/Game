@@ -1,16 +1,18 @@
 package repository
 
-import (
-	"context"
-	"game/app"
-)
-
 func OTPLimit(phone string) (int64, string) {
-	rdb := app.RedisDB
-	ctx := context.Background()
+
 	//insert rate limit phone and add counter
 	rateLimit := "rateLimit : " + phone
-	count := rdb.Incr(ctx, rateLimit).Val()
+	count := Rdb.Incr(Ctx, rateLimit).Val()
+
+	return count, rateLimit
+}
+func OTPAnswerLimit(phone string) (int64, string) {
+
+	//insert rate limit phone and add counter
+	rateLimit := "WrongedAnswerLimit : " + phone
+	count := Rdb.Incr(Ctx, rateLimit).Val()
 
 	return count, rateLimit
 }

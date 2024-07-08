@@ -8,22 +8,15 @@ import (
 )
 
 func Login(c *gin.Context) {
-	var user domain.User
-	if err := c.BindJSON(&user); err != nil {
+
+	var client domain.RequestPhone
+	if err := c.BindJSON(&client); err != nil {
 		c.JSON(http.StatusBadRequest, "Bad request error")
 		return
 	}
-	id, err := logic.FindUser(user.Phone)
+	token, err := logic.Login(client.Phone)
 	if err != nil {
-		c.JSON(http.StatusBadRequest, "failed to find user")
-		return
-	}
-
-	token, err := logic.GenerateToken(id)
-	if err != nil {
-		c.JSON(http.StatusBadRequest, "failed to generate token")
-
-		return
+		c.JSON(http.StatusInternalServerError, err)
 	}
 	c.JSON(http.StatusOK, token)
 }

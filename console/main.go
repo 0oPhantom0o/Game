@@ -10,7 +10,7 @@ import (
 
 func main() {
 	if err := app.InitDb(); err != nil {
-		log.Panic()
+		log.Panic("Db didnt init")
 	}
 
 	//Router Init
@@ -26,12 +26,20 @@ func main() {
 
 func setupRoute(Router *gin.Engine) {
 	//setup routes
-	Router.POST("/sign_up", controller.RequestOtp)
-	Router.POST("/sign_in", controller.GetOtp)
-	Router.POST("/login", controller.Login)
-	Router.POST("/Auth", controller.NickName)
-	Router.GET("/Calculate", controller.Calculate)
-	Router.POST("/result", controller.Result)
-	Router.GET("/ScoreBoard/:number", controller.ScoreBoard)
+	//version control
+	v1 := Router.Group(constants.Version)
+
+	//authentication routs
+	auth := v1.Group(constants.Auth)
+	auth.POST(constants.RequestOtp, controller.RequestOtp)
+	auth.POST(constants.Submit, controller.GetOtp)
+	auth.POST(constants.Login, controller.Login)
+	auth.POST(constants.Nickname, controller.NickName)
+
+	//game routs
+	game := v1.Group(constants.Game)
+	game.GET(constants.RequestQuestion, controller.GameQuestion)
+	game.POST(constants.SubmitAnswer, controller.Answer)
+	game.GET(constants.ShowTopPlayers, controller.ScoreBoard)
 
 }

@@ -6,21 +6,20 @@ import (
 	"game/app"
 	"game/domain"
 	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
-func FindUserByName(name string) (primitive.ObjectID, error) {
+func FindUserIdByPhone(phone string) (string, error) {
 	collection, err := app.Collection()
-	var user domain.User
+	var user domain.UserId
 	ctx := context.TODO()
 	if err != nil {
-		return primitive.NilObjectID, fmt.Errorf("failed to connect to database: %w", err)
+		return "", fmt.Errorf("failed to connect to database: %w", err)
 	}
-	filter := bson.D{{"phone", name}}
+	filter := bson.D{{"phone", phone}}
 	//find _id based on phone
 	err = collection.FindOne(ctx, filter).Decode(&user)
 	if err != nil {
-		return primitive.NilObjectID, err
+		return "", err
 	}
-	return user.ID, nil
+	return user.ID.Hex(), nil
 }

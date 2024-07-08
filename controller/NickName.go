@@ -14,21 +14,16 @@ func NickName(c *gin.Context) {
 		c.JSON(http.StatusUnauthorized, "token has problem")
 		return
 	}
-	var user domain.User
-	if err := c.BindJSON(&user); err != nil {
-		c.JSON(http.StatusBadRequest, "bad request")
-		return
-	}
-	primitiveId, err := logic.ConvertStringToPrimitive(id)
-	if err != nil {
+	var userNickname domain.RequestNickName
+	if err := c.BindJSON(&userNickname); err != nil {
 		c.JSON(http.StatusBadRequest, "bad request")
 		return
 	}
 
-	err = logic.NickName(user.NickName, primitiveId)
+	err = logic.UpdateNickName(userNickname.NickName, id)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, "error")
 		return
 	}
-	c.JSON(http.StatusOK, "nickName changed to : "+user.NickName)
+	c.JSON(http.StatusOK, "nickName changed to : "+userNickname.NickName)
 }

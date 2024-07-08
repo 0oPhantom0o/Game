@@ -8,20 +8,15 @@ import (
 )
 
 func RequestOtp(c *gin.Context) {
-	var user domain.User
+	var user domain.RequestPhone
 	if err := c.BindJSON(&user); err != nil {
 		c.JSON(http.StatusBadRequest, "Bad request error")
 		return
 	}
-	code, err := logic.RandomCode()
-	if err != nil {
-		c.JSON(http.StatusInternalServerError, "error")
-		return
-	}
 
-	err = logic.TempUser(user.Phone, code)
+	err := logic.RequestOtp(user.Phone)
 	if err != nil {
-		c.JSON(http.StatusBadRequest, err)
+		c.JSON(http.StatusInternalServerError, err)
 		return
 	}
 	c.JSON(http.StatusOK, "Code is sent")

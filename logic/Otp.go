@@ -5,15 +5,15 @@ import (
 	"game/repository"
 )
 
-func CheckOtp(phone, code string) error {
-	storedCode, err := repository.FindRedisValue(phone)
+func checkOtp(phone, code string) (bool, error) {
+	storedCode, err := repository.FindStoredOtp(phone)
 	if err != nil {
-		return err
+		return false, err
 	}
 	if storedCode == code && storedCode != "" {
-		return nil
+		return true, nil
 	}
 
-	return fmt.Errorf("error in compare otp")
+	return false, fmt.Errorf("error in compare otp")
 
 }

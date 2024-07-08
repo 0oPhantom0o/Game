@@ -6,4 +6,5 @@ const (
 	QuestionExpireTime      = 30 * time.Second
 	TempUserExpireTIme      = 5 * time.Minute
 	RateLimitUserExpireTime = 10 * time.Minute
+	WrongedAnswerExpireTime = 20 * time.Minute
 )

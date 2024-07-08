@@ -6,11 +6,23 @@ import (
 )
 
 type User struct {
-	ID         primitive.ObjectID `json:"ID" bson:"_id omitempty"`
+	ID         primitive.ObjectID `json:"ID" bson:"_id,omitempty"`
 	Phone      string             `json:"phone" bson:"phone"`
 	RandomCode string             `json:"randomCode" bson:"randomCode"`
-	NickName   string             `json:"nickName" bson:"nickName"`
-	Result     string             `json:"result" bson:"result"`
+}
+
+type RequestPhone struct {
+	Phone string `json:"phone" bson:"phone"`
+}
+type UserId struct {
+	ID primitive.ObjectID `json:"ID" bson:"_id,omitempty"`
+}
+type UserAnswer struct {
+	Answer string `json:"answer" bson:"answer"`
+}
+
+type RequestNickName struct {
+	NickName string `json:"nickName" bson:"nickName"`
 }
 
 type UserClaim struct {

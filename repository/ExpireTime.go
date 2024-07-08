@@ -1,16 +1,21 @@
 package repository
 
 import (
-	"context"
-	"game/app"
 	"game/constants"
 )
 
-func ExpireTime(key string) bool {
-	rdb := app.RedisDB
-	ctx := context.Background()
+func ExpireOtpTime(key string) bool {
 
-	err := rdb.Expire(ctx, key, constants.RateLimitUserExpireTime)
+	err := Rdb.Expire(Ctx, key, constants.RateLimitUserExpireTime)
+	if err == nil {
+		return false
+	}
+
+	return true
+}
+func ExpireWrongedAnswerTime(key string) bool {
+
+	err := Rdb.Expire(Ctx, key, constants.WrongedAnswerExpireTime)
 	if err == nil {
 		return false
 	}

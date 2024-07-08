@@ -1,14 +1,39 @@
 package logic
 
 import (
+	"fmt"
+	"game/constants"
 	"game/repository"
-	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
-func GenerateUser(phone string) (primitive.ObjectID, error) {
+func GenerateUser(phone, randomCode string) (string, error) {
+	//limiting wronged answers
+	limitCounter, PhoneLimit := repository.OTPAnswerLimit(phone)
+	if limitCounter == constants.WrongedAnswerOtpBase {
+		err := repository.ExpireWrongedAnswerTime(PhoneLimit)
+		if err != true {
+			return "", fmt.Errorf("error in expire time set")
+		}
+	}
+	if limitCounter == constants.WrongedAnswerOtpLimit {
+		return "", fmt.Errorf("user Limited wait 10 minutes")
+	}
+
+	status, err := checkOtp(phone, randomCode)
+	if err != nil {
+		return "", err
+	}
+
+	if !status {
+		return "", fmt.Errorf("wronge answer")
+	}
 	id, err := repository.CreateUser(phone)
 	if err != nil {
-		return primitive.NilObjectID, err
+		return "", err
 	}
-	return id, nil
+	token, err := GenerateToken(id)
+	if err != nil {
+		return "", fmt.Errorf("failed to generate token")
+	}
+	return token, nil
 }

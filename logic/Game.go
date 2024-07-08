@@ -7,8 +7,8 @@ import (
 )
 
 func Question(id string) (string, error) {
-	question, answer := QuestionGenerator()
-	err := repository.RedisDataSet(id, answer, "question")
+	question, answer := QaGenerator()
+	err := repository.InsertAnswer(id, answer)
 	if err != nil {
 		return "", fmt.Errorf("data didnt inserted")
 	}
@@ -16,11 +16,12 @@ func Question(id string) (string, error) {
 	return question, nil
 }
 
-func QuestionGenerator() (string, string) {
+func QaGenerator() (string, string) {
+	//generate question and answer
 	number1 := rand.Intn(10)
 	number2 := rand.Intn(10)
-	answer := number1 + number2
-	question, result := ConvertIntegerToString(number1, number2, answer)
+	result := number1 + number2
+	question, answer := ConvertIntegerToString(number1, number2, result)
 	fmt.Println(question)
-	return question, result
+	return question, answer
 }

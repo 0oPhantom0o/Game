@@ -13,21 +13,13 @@ func ScoreBoard(c *gin.Context) {
 		c.JSON(http.StatusUnauthorized, "error")
 		return
 	}
-	id := c.Param("number")
-	number, err := logic.ConvertStringToInteger(id)
-	if err != nil {
-		c.JSON(http.StatusBadRequest, "number is not valid")
-		return
-	}
-	userList, err := logic.ScoreBoard(number)
+	number := c.Param("number")
+
+	scoreBoard, err := logic.ScoreBoard(number)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, err)
 		return
 	}
-	scoreBoard, err := logic.ConvertStructToString(userList)
-	if err != nil {
-		c.JSON(http.StatusBadRequest, err)
-		return
-	}
+
 	c.JSON(http.StatusOK, scoreBoard)
 }

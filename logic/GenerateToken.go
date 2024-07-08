@@ -3,16 +3,16 @@ package logic
 import (
 	"game/constants"
 	"github.com/golang-jwt/jwt/v5"
-	"go.mongodb.org/mongo-driver/bson/primitive"
 	"time"
 )
 
 var secretKey = []byte(constants.SecretKey)
 
-func GenerateToken(Id primitive.ObjectID) (string, error) {
+func GenerateToken(id string) (string, error) {
+
 	tokenGenerator := jwt.NewWithClaims(jwt.SigningMethodHS256,
 		jwt.MapClaims{
-			"ID":  Id.Hex(),
+			"ID":  id,
 			"exp": time.Now().Add(time.Hour * 24).Unix(),
 		})
 

@@ -8,7 +8,7 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
-func UpdateUser(id primitive.ObjectID, nickname string) error {
+func UpdateNickName(id primitive.ObjectID, nickname string) error {
 	collection, err := app.Collection()
 	ctx := context.TODO()
 	if err != nil {
