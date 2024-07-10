@@ -21,6 +21,6 @@ func GetOtp(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, token)
+	c.JSON(http.StatusOK, gin.H{"token": token})
 
 }

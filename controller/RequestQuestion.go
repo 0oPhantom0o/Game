@@ -6,7 +6,7 @@ import (
 	"net/http"
 )
 
-func GameQuestion(c *gin.Context) {
+func RequestQuestion(c *gin.Context) {
 	tokenString := c.GetHeader("Authorization")
 	Id, err := logic.VerifyToken(tokenString)
 	if err != nil {

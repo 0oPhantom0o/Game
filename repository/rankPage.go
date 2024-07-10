@@ -4,16 +4,17 @@ import (
 	"context"
 	"fmt"
 	"game/app"
+	"game/constants"
 	"game/domain"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
 func ShowUsers(page, limit int64) ([]domain.TopPlayers, error) {
-	var userScoreboard []domain.TopPlayers
+	var scoreboard []domain.TopPlayers
 	collection, err := app.Collection()
 	if err != nil {
-		return userScoreboard, fmt.Errorf("failed to connect to database: %w", err)
+		return scoreboard, fmt.Errorf("failed to connect to database: %w", err)
 	}
 	filter := bson.D{}
 	//	limit := int64(10)
@@ -22,14 +23,15 @@ func ShowUsers(page, limit int64) ([]domain.TopPlayers, error) {
 	//only get nickname and point
 	//SetProjection(bson.D{{"phone", 0}, {"_id", 0}, {"nickNameLimit", 0}})
 	opts := options.Find().SetSort(bson.D{{"point", -1}}).
-		SetLimit(limit).SetSkip(skip)
+		SetLimit(limit + constants.DatabaseNextPageCheck).SetSkip(skip)
 	cursor, err := collection.Find(context.TODO(), filter, opts)
 	if err != nil {
-		return userScoreboard, err
+		return scoreboard, err
 	}
-	err = cursor.All(context.TODO(), &userScoreboard)
+	err = cursor.All(context.TODO(), &scoreboard)
 	if err != nil {
-		return userScoreboard, err
+		return scoreboard, err
 	}
-	return userScoreboard, nil
+
+	return scoreboard, nil
 }

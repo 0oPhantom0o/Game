@@ -7,4 +7,6 @@ const (
 	WrongedAnswerPoint    = -1
 	WrongedAnswerOtpBase  = 1
 	WrongedAnswerOtpLimit = 3
+	DatabaseNextPageCheck = 1
+	RemoveNextPageCheck   = -1
 )

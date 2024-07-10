@@ -1,17 +1,17 @@
 package app
 
 import (
-	"log"
+	"fmt"
 )
 
 func InitDb() error {
 	err := MongoConnection()
 	if err != nil {
-		log.Fatalf("Failed to initialize MongoDB: %v", err)
+		return fmt.Errorf("failed to initialize MongoDB: %v", err)
 	}
 	err = RedisConnection()
 	if err != nil {
-		log.Fatalf("Failed to initialize MongoDB: %v", err)
+		return fmt.Errorf("failed to initialize RedisDB: %v", err)
 	}
 
 	return nil

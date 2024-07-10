@@ -10,7 +10,7 @@ import (
 
 func main() {
 	if err := app.InitDb(); err != nil {
-		log.Panic("Db didnt init")
+		log.Panicf("DataBase is not running %v", err)
 	}
 
 	//Router Init
@@ -38,7 +38,7 @@ func setupRoute(Router *gin.Engine) {
 
 	//game routs
 	game := v1.Group(constants.Game)
-	game.GET(constants.RequestQuestion, controller.GameQuestion)
+	game.GET(constants.RequestQuestion, controller.RequestQuestion)
 	game.POST(constants.SubmitAnswer, controller.Answer)
 	game.GET(constants.ShowTopPlayers, controller.ScoreBoard)
 
