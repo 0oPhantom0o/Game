@@ -1,13 +1,12 @@
 package logic
 
 import (
-	"encoding/json"
 	"fmt"
-	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
+	"strconv"
 )
 
-func ConvertStringToPrimivite(Id string) (primitive.ObjectID, error) {
+func convertStringToPrimitive(Id string) (primitive.ObjectID, error) {
 	ID, err := primitive.ObjectIDFromHex(Id)
 	if err != nil {
 		return primitive.NilObjectID, err
@@ -15,38 +14,32 @@ func ConvertStringToPrimivite(Id string) (primitive.ObjectID, error) {
 	return ID, nil
 }
 
-func ConvertBsonDToScoreBoard(results []bson.D) ([]string, error) {
-
-	var mergedData []string
-
-	var nickName string
-	var point int
-	type KeyValue struct {
-		Key   string      `json:"Key"`
-		Value interface{} `json:"Value"`
+func convertStringToInteger(stringNumber string) (int64, error) {
+	number, err := strconv.Atoi(stringNumber)
+	if err != nil {
+		return 0, fmt.Errorf("can't convert this to an int ")
+	} else {
+		fmt.Println(number)
 	}
-	var data []KeyValue
-	for _, result := range results {
-		jsonData, _ := json.Marshal(result)
-		strData := string(jsonData)
-		_ = json.Unmarshal([]byte(strData), &data)
-		for _, item := range data {
-			switch item.Key {
-			case "nickName":
-				if val, ok := item.Value.(string); ok {
-					nickName = val
-				}
-			case "point":
-				if val, ok := item.Value.(float64); ok {
-					point = int(val)
-				}
-			}
-		}
-		if nickName != "" && point != 0 {
-			mergedData = append(mergedData, fmt.Sprintf("NickName : %s, Point : %d", nickName, point))
-		}
-
-	}
-
-	return mergedData, nil
+	return int64(number), nil
 }
+
+func convertIntegerToString(n1, n2, answer int) (string, string) {
+	number1 := strconv.Itoa(n1)
+	number2 := strconv.Itoa(n2)
+	result := strconv.Itoa(answer)
+	question := number1 + " + " + number2
+	return question, result
+}
+
+//func ConvertStructToString(data []domain.InternalUser) ([]string, error) {
+//
+//	var formattedData []string
+//
+//	for _, entry := range data {
+//
+//		formattedData = append(formattedData, fmt.Sprintf("Name : %s, Point : %d", entry.NickName, entry.Point))
+//
+//	}
+//	return formattedData, nil
+//}

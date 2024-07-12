@@ -1,20 +1,23 @@
 package logic
 
 import (
+	"fmt"
 	"game/repository"
 )
 
-func NickName(NickName, id string) error {
-	primiviteId, err := ConvertStringToPrimivite(id)
+func UpdateNickName(NickName, id string) error {
+	primitiveId, err := convertStringToPrimitive(id)
 	if err != nil {
 		return err
 	}
-	if err != nil {
-		return err
+	count, err := repository.FindUserByID(primitiveId)
+	if count > 2 {
+		return fmt.Errorf("you changed nickname 2 times")
 	}
-	err = repository.UpdateUser(primiviteId, NickName)
+	err = repository.UpdateNickName(primitiveId, NickName)
 	if err != nil {
 		return err
 	}
 	return nil
+
 }

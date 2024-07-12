@@ -1,8 +1,13 @@
 package domain
 
 type InternalUser struct {
-	//ID       primitive.ObjectID `json:"id" bson:"_id omitempty"`
-	Phone    string `json:"phone" bson:"phone"`
+	Phone         string `json:"phone" bson:"phone"`
+	NickName      string `json:"nickName" bson:"nickName"`
+	NickNameLimit int    `bson:"nickNameLimit"`
+	Point         int    `json:"point" bson:"point"`
+}
+
+type TopPlayers struct {
 	NickName string `json:"nickName" bson:"nickName"`
 	Point    int    `json:"point" bson:"point"`
 }

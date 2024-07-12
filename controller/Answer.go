@@ -7,24 +7,27 @@ import (
 	"net/http"
 )
 
-func Result(c *gin.Context) {
+func Answer(c *gin.Context) {
 	tokenString := c.GetHeader("Authorization")
 	id, err := logic.VerifyToken(tokenString)
 	if err != nil {
-		c.JSON(http.StatusUnauthorized, "error")
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "token has problem"})
 		return
 	}
-	var Answer domain.Answer
-	if err := c.BindJSON(&Answer); err != nil {
-		c.JSON(http.StatusBadRequest, "error")
+	var user domain.UserAnswer
+	if err := c.BindJSON(&user); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	status, err := logic.CheckAnswer(id, Answer.Result)
+	status, err := logic.CheckAnswer(id, user.Answer)
 	if err != nil {
-		c.JSON(http.StatusBadRequest, "error")
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
-
-	c.JSON(http.StatusOK, status)
+	if status == true {
+		c.JSON(http.StatusOK, gin.H{"message": "right answer"})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"message": "wronged answer"})
 }

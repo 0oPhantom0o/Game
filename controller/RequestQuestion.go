@@ -6,14 +6,18 @@ import (
 	"net/http"
 )
 
-func Calculate(c *gin.Context) {
+func RequestQuestion(c *gin.Context) {
 	tokenString := c.GetHeader("Authorization")
 	Id, err := logic.VerifyToken(tokenString)
 	if err != nil {
-		c.JSON(http.StatusUnauthorized, "error")
+		c.JSON(http.StatusUnauthorized, gin.H{"error": err.Error()})
 		return
 	}
-	number, err := logic.NumberForUser(Id)
-	c.JSON(http.StatusOK, number)
+	question, err := logic.Question(Id)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"answer the question : ": question})
 
 }

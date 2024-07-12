@@ -9,12 +9,9 @@ import (
 
 func VerifyToken(reqToken string) (string, error) {
 	if reqToken == "" {
-		return "", fmt.Errorf("token empty")
+		return "", fmt.Errorf("invalid token")
 	}
 	splitToken := strings.Split(reqToken, "Bearer")
-	if len(splitToken) != 2 {
-		return "", fmt.Errorf("error")
-	}
 
 	tokenString := strings.TrimSpace(splitToken[1])
 
@@ -23,9 +20,8 @@ func VerifyToken(reqToken string) (string, error) {
 		return secretKey, nil
 	})
 	if err != nil {
-		return "", err
+		return "", fmt.Errorf("some problem in decoding jwt")
 	}
-
 	if !token.Valid {
 		return "", fmt.Errorf("invalid token")
 	}
