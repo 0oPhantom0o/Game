@@ -1,18 +1,18 @@
 package logic
 
 import (
+	"fmt"
 	"game/repository"
 )
 
-func checkOtp(phone, code string) (bool, error) {
-	storedCode, err := repository.FindStoredOtp(phone)
+func CompareOtp(phone, code string) error {
+	storedCode, err := repository.FindUserTempData(phone)
 	if err != nil {
-		return false, err
+		return err
 	}
 	if storedCode == code && storedCode != "" {
-		return true, nil
+		return nil
 	}
-
-	return false, nil
+	return fmt.Errorf("error in compare otp")
 
 }

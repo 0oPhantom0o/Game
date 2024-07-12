@@ -11,19 +11,19 @@ func NickName(c *gin.Context) {
 	tokenString := c.GetHeader("Authorization")
 	id, err := logic.VerifyToken(tokenString)
 	if err != nil {
-		c.JSON(http.StatusUnauthorized, gin.H{"error": "token has problem"})
+		c.JSON(http.StatusUnauthorized, "token has problem")
 		return
 	}
-	var user domain.RequestNickName
+	var user domain.User
 	if err := c.BindJSON(&user); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "bad request"})
+		c.JSON(http.StatusBadRequest, "bad request")
 		return
 	}
 
-	err = logic.UpdateNickName(user.NickName, id)
+	err = logic.NickName(user.NickName, id)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"message": "you changed nickname before"})
+		c.JSON(http.StatusBadRequest, "error")
 		return
 	}
-	c.JSON(http.StatusOK, gin.H{"nickName changed to": user.NickName})
+	c.JSON(http.StatusOK, tokenString)
 }
