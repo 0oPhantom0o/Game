@@ -7,12 +7,14 @@ import (
 )
 
 func CheckAnswer(id, answer string) (bool, error) {
+
 	trueAnswer, err := repository.FindAnswer(id)
 	if err != nil {
-		return false, fmt.Errorf("too late... please search new question ")
+		return false, fmt.Errorf("wronge answer . search for new question ")
 	}
 
 	if trueAnswer == answer {
+
 		err := changePoint(id, constants.RightAnswerPoint)
 		if err != nil {
 			return true, err
@@ -24,7 +26,10 @@ func CheckAnswer(id, answer string) (bool, error) {
 			return false, err
 		}
 	}
-
+	err = repository.DeleteAnswer(id)
+	if err != nil {
+		return true, err
+	}
 	return false, nil
 }
 

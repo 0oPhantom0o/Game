@@ -20,8 +20,20 @@ func OTPAnswerLimit(phone string) (int64, string) {
 	var ctx = context.Background()
 
 	//insert rate limit phone and add counter
-	rateLimit := "WrongedAnswerLimit : " + phone
+	rateLimit := "WrongedOTPAnswerLimit : " + phone
 	count := rdb.Incr(ctx, rateLimit).Val()
 
 	return count, rateLimit
 }
+
+//
+//func AnswerLimit(id string) (int64, string) {
+//	var rdb = app.RedisDB
+//	var ctx = context.Background()
+//
+//	//insert rate limit phone and add counter
+//	rateLimit := "QuestionAnswerLimit : " + id
+//	count := rdb.Incr(ctx, rateLimit).Val()
+//
+//	return count, rateLimit
+//}

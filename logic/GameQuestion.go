@@ -7,6 +7,7 @@ import (
 )
 
 func Question(id string) (string, error) {
+
 	question, answer := QaGenerator()
 	err := repository.InsertAnswer(id, answer)
 	if err != nil {
