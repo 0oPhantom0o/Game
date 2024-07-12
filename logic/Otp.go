@@ -1,7 +1,6 @@
 package logic
 
 import (
-	"fmt"
 	"game/repository"
 )
 
@@ -14,6 +13,6 @@ func checkOtp(phone, code string) (bool, error) {
 		return true, nil
 	}
 
-	return false, fmt.Errorf("error in compare otp")
+	return false, nil
 
 }

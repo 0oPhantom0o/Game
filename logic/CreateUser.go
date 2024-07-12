@@ -22,7 +22,7 @@ func GenerateUser(phone, randomCode string) (string, error) {
 			}
 		}
 		if limitCounter == constants.WrongedAnswerOtpLimit {
-			return "", fmt.Errorf("user Limited wait 10 minutes")
+			return "", fmt.Errorf("user Limited. wait 10 minutes")
 		}
 
 		return "", fmt.Errorf("wronge answer")
