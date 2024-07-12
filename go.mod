@@ -9,7 +9,6 @@ require (
 )
 
 require (
-	github.com/bxcodec/faker v2.0.1+incompatible // indirect
 	github.com/bytedance/sonic v1.11.6 // indirect
 	github.com/bytedance/sonic/loader v0.1.1 // indirect
 	github.com/cespare/xxhash/v2 v2.2.0 // indirect
