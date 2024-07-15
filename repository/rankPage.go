@@ -17,11 +17,8 @@ func ShowUsers(page, limit int64) ([]domain.TopPlayers, error) {
 		return scoreboard, fmt.Errorf("failed to connect to database: %w", err)
 	}
 	filter := bson.D{}
-	//	limit := int64(10)
 	skip := (page - 1) * limit
-	//paginatedData, err := New(collection).Context(ctx).Limit(limit).Page(page).Sort("price", -1).Select(projection).Filter(filter).Decode(&products).Find()
-	//only get nickname and point
-	//SetProjection(bson.D{{"phone", 0}, {"_id", 0}, {"nickNameLimit", 0}})
+
 	opts := options.Find().SetSort(bson.D{{"point", -1}}).
 		SetLimit(limit + constants.DatabaseNextPageCheck).SetSkip(skip)
 	cursor, err := collection.Find(context.TODO(), filter, opts)
