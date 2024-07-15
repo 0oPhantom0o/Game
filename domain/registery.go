@@ -21,6 +21,7 @@ type UserAnswer struct {
 	Answer string `json:"answer" bson:"answer"`
 }
 
+// a
 type RequestNickName struct {
 	NickName string `json:"nickName" bson:"nickName"`
 }

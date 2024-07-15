@@ -46,6 +46,7 @@ func CreateUser(phone string) (string, error) {
 	return objectID.Hex(), nil
 }
 
+//a
 //func fakerUserAdder(user domain.InternalUser) int {
 //	//counter collection documents
 //	//	opts2 := options.Count().SetHint("_id_")

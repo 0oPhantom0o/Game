@@ -10,6 +10,7 @@ import (
 
 var MongoClient *mongo.Client
 
+// a
 func MongoConnection() error {
 	clientOptions := options.Client().ApplyURI(constants.MongoPort)
 	var err error

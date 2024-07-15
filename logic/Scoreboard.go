@@ -30,6 +30,6 @@ func checkNextPage(scoreboard []domain.TopPlayers, count int64) ([]domain.TopPla
 		scoreboard = scoreboard[:len(scoreboard)-constants.RemoveNextPageCheck]
 		return scoreboard, true
 	}
-
+	//a
 	return scoreboard, false
 }

@@ -21,3 +21,5 @@ func UpdateNickName(NickName, id string) error {
 	return nil
 
 }
+
+//a

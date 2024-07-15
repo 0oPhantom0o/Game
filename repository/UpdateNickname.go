@@ -23,3 +23,5 @@ func UpdateNickName(id primitive.ObjectID, nickname string) error {
 	}
 	return nil
 }
+
+//a

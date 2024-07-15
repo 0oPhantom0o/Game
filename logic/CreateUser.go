@@ -27,7 +27,7 @@ func GenerateUser(phone, randomCode string) (string, error) {
 
 		return "", fmt.Errorf("wronge answer")
 	}
-
+	//a
 	id, err := repository.CreateUser(phone)
 	if err != nil {
 		return "", err

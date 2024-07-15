@@ -27,3 +27,5 @@ func NickName(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, gin.H{"nickName changed to": user.NickName})
 }
+
+//a

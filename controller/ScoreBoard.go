@@ -27,3 +27,5 @@ func ScoreBoard(c *gin.Context) {
 
 	c.JSON(http.StatusOK, gin.H{"players": scoreBoard, "next page": true})
 }
+
+//a

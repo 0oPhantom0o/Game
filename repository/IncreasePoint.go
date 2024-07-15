@@ -23,4 +23,4 @@ func ChangePoint(id primitive.ObjectID, point int) error {
 		return fmt.Errorf("failed to increase: %w", err)
 	}
 	return nil
-}
+} //a

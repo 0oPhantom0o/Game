@@ -21,7 +21,7 @@ const (
 	Submit     = "/submitOtp"
 	Login      = "/login"
 	Nickname   = "/nickname"
-
+	//a
 	//Game routs
 	Game            = "/game"
 	RequestQuestion = "/question"

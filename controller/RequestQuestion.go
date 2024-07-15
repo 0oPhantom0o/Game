@@ -21,3 +21,5 @@ func RequestQuestion(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"answer the question : ": question})
 
 }
+
+//a

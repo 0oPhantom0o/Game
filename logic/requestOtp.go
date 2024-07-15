@@ -29,6 +29,7 @@ func RequestOtp(phone string) error {
 	return nil
 }
 
+// a
 func tempUser(phone, code string) error {
 
 	err := repository.InsertOtp(phone, code)

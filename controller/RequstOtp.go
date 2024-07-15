@@ -23,3 +23,5 @@ func RequestOtp(c *gin.Context) {
 	message := constants.CodeIsSent + user.Phone
 	c.JSON(http.StatusOK, gin.H{"message": message})
 }
+
+//a
