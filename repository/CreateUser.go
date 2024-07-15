@@ -5,7 +5,10 @@ import (
 	"fmt"
 	"game/app"
 	"game/domain"
+	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
+	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
 func CreateUser(phone string) (string, error) {
@@ -21,10 +24,19 @@ func CreateUser(phone string) (string, error) {
 		NickNameLimit: 0,
 		Point:         0,
 	}
-
+	_, err = collection.Indexes().CreateOne(
+		context.Background(),
+		mongo.IndexModel{
+			Keys:    bson.D{{Key: "phone", Value: 1}, {Key: "nickname", Value: 1}},
+			Options: options.Index().SetUnique(true),
+		},
+	)
+	if err != nil {
+		return "", fmt.Errorf("failed to insert user into collection because its not uniqe: %w", err)
+	}
 	result, err := collection.InsertOne(ctx, user)
 	if err != nil {
-		return "", fmt.Errorf("failed to insert user into collection: %w", err)
+		fmt.Println(err)
 	}
 	objectID, Err := result.InsertedID.(primitive.ObjectID)
 	if !Err {
@@ -34,14 +46,45 @@ func CreateUser(phone string) (string, error) {
 	return objectID.Hex(), nil
 }
 
-//for i := 0; i < 50; i++ {
-//	_, err := collection.InsertOne(ctx, domain.InternalUser{
-//		Phone:         strconv.Itoa(rand.Intn(10000)),
-//		NickName:      strconv.Itoa(rand.Intn(10000)),
+//func fakerUserAdder(user domain.InternalUser) int {
+//	//counter collection documents
+//	//	opts2 := options.Count().SetHint("_id_")
+//	count, err := collection.CountDocuments(context.TODO(), bson.D{}, opts2)
+//	if err != nil {
+//		panic(err)
+//	}
+//	fmt.Println(count)
+//***************************
+//make user loop
+//counter := 0
+//for counter < 50 {
+//	user := domain.InternalUser{
+//		Phone:         strconv.Itoa(rand.Intn(60)),
+//		NickName:      strconv.Itoa(rand.Intn(80)),
 //		NickNameLimit: 1,
 //		Point:         rand.Intn(100),
-//	})
+//	}
+//	counter = fakerUserAdder(user)
+//
 //	if err != nil {
 //		return "", err
 //	}
+//
+//}
+//
+//collection, err := app.Collection()
+//ctx := context.Background()
+//
+//_, err = collection.InsertOne(ctx, user)
+//if err != nil {
+//	fmt.Println(err)
+//	//}
+//	opts2 := options.Count().SetHint("_id_")
+//
+//	counter, err := collection.CountDocuments(context.TODO(), bson.D{}, opts2)
+//	if err != nil {
+//		panic(err)
+//	}
+//	fmt.Println(counter)
+//	return int(counter)
 //}
