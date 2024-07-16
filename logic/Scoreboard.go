@@ -6,30 +6,35 @@ import (
 	"game/repository"
 )
 
-func ScoreBoard(number, limit string) ([]domain.TopPlayers, bool, error) {
+func ScoreBoard(number, limit string) (domain.Score, error) {
+	var score domain.Score
 
 	page, err := convertStringToInteger(number)
+	if err != nil {
+		return score, err
+	}
 	count, err := convertStringToInteger(limit)
 
 	if err != nil {
-		return nil, false, err
+		return score, err
 	}
 	scoreBoard, err := repository.ShowUsers(page, count)
-	scoreBoard, nextPage := checkNextPage(scoreBoard, count)
+	score.Players, score.NextPage = checkNextPage(scoreBoard, count)
 	if err != nil {
-		return nil, nextPage, err
+		return score, err
 	}
 
-	return scoreBoard, nextPage, nil
+	return score, nil
 
 }
 
 func checkNextPage(scoreboard []domain.TopPlayers, count int64) ([]domain.TopPlayers, bool) {
 
 	if len(scoreboard) > int(count) {
-		scoreboard = scoreboard[:len(scoreboard)-constants.RemoveNextPageCheck]
+
+		scoreboard = scoreboard[:len(scoreboard)-constants.DatabaseNextPageCheck]
 		return scoreboard, true
 	}
-	//a
+
 	return scoreboard, false
 }

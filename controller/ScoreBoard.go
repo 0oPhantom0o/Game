@@ -13,19 +13,14 @@ func ScoreBoard(c *gin.Context) {
 		c.JSON(http.StatusUnauthorized, gin.H{"error": err})
 		return
 	}
+
 	number := c.DefaultQuery("page", "1")
 	limit := c.DefaultQuery("count", "10")
-	scoreBoard, nextPage, err := logic.ScoreBoard(number, limit)
+	score, err := logic.ScoreBoard(number, limit)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	if !nextPage {
-		c.JSON(http.StatusOK, gin.H{"players": scoreBoard, "next page": false})
-		return
-	}
 
-	c.JSON(http.StatusOK, gin.H{"players": scoreBoard, "next page": true})
+	c.JSON(http.StatusOK, gin.H{"NextPage : ": score.NextPage, "players : ": score.Players})
 }
-
-//a

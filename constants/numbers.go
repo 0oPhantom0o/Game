@@ -8,7 +8,7 @@ const (
 	WrongedAnswerOtpBase  = 1
 	WrongedAnswerOtpLimit = 3
 	DatabaseNextPageCheck = 1
-	RemoveNextPageCheck   = -1
+	//	RemoveNextPageCheck   = 1
 )
 
 //a

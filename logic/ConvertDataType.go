@@ -18,8 +18,6 @@ func convertStringToInteger(stringNumber string) (int64, error) {
 	number, err := strconv.Atoi(stringNumber)
 	if err != nil {
 		return 0, fmt.Errorf("can't convert this to an int ")
-	} else {
-		fmt.Println(number)
 	}
 	return int64(number), nil
 }
