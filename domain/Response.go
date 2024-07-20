@@ -1,7 +1,7 @@
 package domain
 
 type ErrorHandler struct {
-	Err error `json:"err"`
+	Err error `json:"error"`
 }
 
 type ResponseClient struct {
@@ -9,5 +9,5 @@ type ResponseClient struct {
 }
 
 type ResponseToken struct {
-	Token string `json:"token"`
+	Token string `json:"jwt_token"`
 }

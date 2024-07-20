@@ -5,7 +5,7 @@ import (
 	"game/repository"
 )
 
-func UpdateNickName(NickName, id string) error {
+func UpdateNickName(nickName, id string) error {
 	primitiveId, err := convertStringToPrimitive(id)
 	if err != nil {
 		return err
@@ -14,12 +14,10 @@ func UpdateNickName(NickName, id string) error {
 	if count > 2 {
 		return fmt.Errorf("you changed nickname 2 times")
 	}
-	err = repository.UpdateNickName(primitiveId, NickName)
+	err = repository.UpdateNickName(primitiveId, nickName)
 	if err != nil {
 		return err
 	}
 	return nil
 
 }
-
-//a

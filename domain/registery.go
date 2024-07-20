@@ -6,25 +6,25 @@ import (
 )
 
 type User struct {
-	ID         primitive.ObjectID `json:"ID" bson:"_id,omitempty"`
-	Phone      string             `json:"phone" bson:"phone"`
-	RandomCode string             `json:"randomCode" bson:"randomCode"`
+	Phone      string `json:"phone"`
+	RandomCode string `json:"random_code"`
 }
 
 type RequestPhone struct {
-	Phone string `json:"phone" bson:"phone"`
+	Phone string `json:"phone"`
 }
-type UserId struct {
-	ID primitive.ObjectID `json:"ID" bson:"_id,omitempty"`
-}
-type UserAnswer struct {
-	Answer string `json:"answer" bson:"answer"`
+
+type RequestAnswer struct {
+	Answer string `json:"answer"`
 }
 
 type RequestNickName struct {
-	NickName string `json:"nickName" bson:"nickName"`
+	NickName string `json:"nick_name"`
 }
 
+type UserId struct {
+	ID primitive.ObjectID `bson:"_id,omitempty"`
+}
 type UserClaim struct {
 	jwt.RegisteredClaims
 	ID string

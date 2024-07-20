@@ -8,14 +8,14 @@ import (
 
 func RequestOtp(phone string) (string, error) {
 	//limiting request otp
-	limitCounter, rateLimit := repository.OtpLimit(phone)
-	if limitCounter == 1 {
+	counter, rateLimit := repository.OtpLimit(phone)
+	if counter == 1 {
 		err := repository.ExpireOtpTime(rateLimit)
 		if err != true {
 			return "", fmt.Errorf("error in expire time set")
 		}
 	}
-	if limitCounter >= 5 {
+	if counter >= 5 {
 		return "", fmt.Errorf("user Limited")
 	}
 

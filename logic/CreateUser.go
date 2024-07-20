@@ -14,20 +14,19 @@ func GenerateUser(phone, randomCode string) (string, error) {
 	}
 
 	if !status {
-		limitCounter, PhoneLimit := repository.OTPAnswerLimit(phone)
-		if limitCounter == constants.WrongedAnswerOtpBase {
-			err := repository.ExpireWrongedAnswerTime(PhoneLimit)
+		counter, rateLimit := repository.OTPAnswerLimit(phone)
+		if counter == constants.WrongedAnswerOtpBase {
+			err := repository.ExpireWrongedAnswerTime(rateLimit)
 			if err != true {
 				return "", fmt.Errorf("error in expire time set")
 			}
 		}
-		if limitCounter == constants.WrongedAnswerOtpLimit {
+		if counter == constants.WrongedAnswerOtpLimit {
 			return "", fmt.Errorf("user Limited. wait 10 minutes")
 		}
 
 		return "", fmt.Errorf("wronge answer")
 	}
-	//a
 	id, err := repository.CreateUser(phone)
 	if err != nil {
 		return "", err

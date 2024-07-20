@@ -24,14 +24,14 @@ func FindUserIdByPhone(phone string) (string, error) {
 	}
 	return user.ID.Hex(), nil
 }
-func FindUserByID(id primitive.ObjectID) (int, error) {
+func FindUserByID(primitiveId primitive.ObjectID) (int, error) {
 	collection, err := app.Collection()
 	var user domain.InternalUser
 	ctx := context.TODO()
 	if err != nil {
 		return 0, fmt.Errorf("failed to connect to database: %w", err)
 	}
-	filter := bson.D{{"_id", id}}
+	filter := bson.D{{"_id", primitiveId}}
 	//find _id based on phone
 	err = collection.FindOne(ctx, filter).Decode(&user)
 	if err != nil {

@@ -14,7 +14,6 @@ func randomCode() (string, error) {
 	return code, nil
 }
 
-// a
 func CreateRandomCode() string {
 	numbers := constants.OtpCharacters
 	codeLength := constants.OtpCodeLength

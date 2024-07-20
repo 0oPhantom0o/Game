@@ -14,7 +14,7 @@ func Answer(c *gin.Context) {
 		c.JSON(http.StatusUnauthorized, gin.H{"error": "token has problem"})
 		return
 	}
-	var user domain.UserAnswer
+	var user domain.RequestAnswer
 	if err := c.BindJSON(&user); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return

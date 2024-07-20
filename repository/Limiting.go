@@ -3,6 +3,7 @@ package repository
 import (
 	"context"
 	"game/app"
+	"game/constants"
 )
 
 func OtpLimit(phone string) (int64, string) {
@@ -10,31 +11,18 @@ func OtpLimit(phone string) (int64, string) {
 	var ctx = context.Background()
 
 	//insert rate limit phone and add counter
-	rateLimit := "rateLimit:" + phone
-	limitCounter := rdb.Incr(ctx, rateLimit).Val()
+	rateLimit := constants.RateLimit + phone
+	counter := rdb.Incr(ctx, rateLimit).Val()
 
-	return limitCounter, rateLimit
+	return counter, rateLimit
 }
 func OTPAnswerLimit(phone string) (int64, string) {
 	var rdb = app.RedisDB
 	var ctx = context.Background()
 
 	//insert rate limit phone and add counter
-	rateLimit := "WrongedOTPAnswerLimit:" + phone
-	limitCounter := rdb.Incr(ctx, rateLimit).Val()
+	rateLimit := constants.WrongedOtpAnswerLimit + phone
+	counter := rdb.Incr(ctx, rateLimit).Val()
 
-	return limitCounter, rateLimit
+	return counter, rateLimit
 }
-
-//
-//func AnswerLimit(id string) (int64, string) {
-//	var rdb = app.RedisDB
-//	var ctx = context.Background()
-//
-//	//insert rate limit phone and add counter
-//	rateLimit := "QuestionAnswerLimit : " + id
-//	count := rdb.Incr(ctx, rateLimit).Val()
-//
-//	return count, rateLimit
-//}
-//a

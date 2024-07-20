@@ -4,17 +4,15 @@ import (
 	"game/repository"
 )
 
-func checkOtp(phone, code string) (bool, error) {
+func checkOtp(phone, randomCode string) (bool, error) {
 	storedCode, err := repository.FindStoredOtp(phone)
 	if err != nil {
 		return false, err
 	}
-	if storedCode == code && storedCode != "" {
+	if storedCode == randomCode && storedCode != "" {
 		return true, nil
 	}
 
 	return false, nil
 
 }
-
-//a

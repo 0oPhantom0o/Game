@@ -7,11 +7,11 @@ import (
 )
 
 func convertStringToPrimitive(Id string) (primitive.ObjectID, error) {
-	ID, err := primitive.ObjectIDFromHex(Id)
+	primitiveId, err := primitive.ObjectIDFromHex(Id)
 	if err != nil {
 		return primitive.NilObjectID, err
 	}
-	return ID, nil
+	return primitiveId, nil
 }
 
 func convertStringToInteger(stringNumber string) (int64, error) {
@@ -22,7 +22,6 @@ func convertStringToInteger(stringNumber string) (int64, error) {
 	return int64(number), nil
 }
 
-// a
 func convertIntegerToString(n1, n2, answer int) (string, string) {
 	number1 := strconv.Itoa(n1)
 	number2 := strconv.Itoa(n2)

@@ -25,7 +25,5 @@ func NickName(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, gin.H{"message": "you changed nickname before"})
 		return
 	}
-	c.JSON(http.StatusOK, gin.H{"nickName changed to": user.NickName})
+	c.JSON(http.StatusOK, gin.H{"nickName changed to": user})
 }
-
-//a

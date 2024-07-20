@@ -36,17 +36,16 @@ func CreateUser(phone string) (string, error) {
 	}
 	result, err := collection.InsertOne(ctx, user)
 	if err != nil {
-		fmt.Println(err)
+		return "", fmt.Errorf("failed to insert user into collection:%w", err)
 	}
-	objectID, Err := result.InsertedID.(primitive.ObjectID)
+	mongoID, Err := result.InsertedID.(primitive.ObjectID)
 	if !Err {
 		return "", fmt.Errorf("failed to convert inserted ID to ObjectID")
 	}
 
-	return objectID.Hex(), nil
+	return mongoID.Hex(), nil
 }
 
-//a
 //func fakerUserAdder(user domain.InternalUser) int {
 //	//counter collection documents
 //	//	opts2 := options.Count().SetHint("_id_")
