@@ -10,18 +10,22 @@ import (
 
 func RequestOtp(c *gin.Context) {
 	var user domain.RequestPhone
-	if err := c.BindJSON(&user); err != nil {
+	var responseError domain.ErrorHandler
+	var client domain.ResponseClient
+
+	err := responseError.Err
+	if err = c.BindJSON(&user); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err})
 		return
 	}
 
-	err := logic.RequestOtp(user.Phone)
+	err = logic.RequestOtp(user.Phone)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	message := constants.CodeIsSent + user.Phone
-	c.JSON(http.StatusOK, gin.H{"message": message})
+	client.Response = constants.CodeIsSent + user.Phone
+	c.JSON(http.StatusOK, gin.H{"message": client})
 }
 
 //a

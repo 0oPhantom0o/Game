@@ -8,11 +8,11 @@ import (
 func InitDb() error {
 	err := MongoConnection()
 	if err != nil {
-		return fmt.Errorf("failed to initialize MongoDB: %v", err)
+		return fmt.Errorf("failed to initialize MongoDB:%v", err)
 	}
 	err = RedisConnection()
 	if err != nil {
-		return fmt.Errorf("failed to initialize RedisDB: %v", err)
+		return fmt.Errorf("failed to initialize RedisDB:%v", err)
 	}
 
 	return nil

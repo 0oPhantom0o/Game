@@ -10,7 +10,7 @@ import (
 
 func main() {
 	if err := app.InitDb(); err != nil {
-		log.Panicf("DataBase is not running %v", err)
+		log.Panicf("DataBase is not running:%v", err)
 	}
 
 	//Router Init

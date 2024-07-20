@@ -19,7 +19,7 @@ func RedisConnection() error {
 	})
 	_, err := RedisDB.Ping(ctx).Result()
 	if err != nil {
-		return fmt.Errorf("error initializing Redis database: %w", err)
+		return fmt.Errorf("error initializing Redis database:%w", err)
 	}
 
 	return nil
