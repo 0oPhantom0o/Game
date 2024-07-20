@@ -55,12 +55,10 @@ func FindAnswer(id string) (string, error) {
 	var rdb = app.RedisDB
 	var ctx = context.Background()
 
-	value, err := rdb.Get(ctx, id).Result()
+	trueAnswer, err := rdb.Get(ctx, id).Result()
 	if err != nil {
 		return "", err
 	}
-	return value, nil
+	return trueAnswer, nil
 
 }
-
-//a

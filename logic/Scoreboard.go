@@ -6,14 +6,14 @@ import (
 	"game/repository"
 )
 
-func ScoreBoard(number, limit string) (domain.Score, error) {
+func ScoreBoard(pageNumber, perPage string) (domain.Score, error) {
 	var score domain.Score
 
-	page, err := convertStringToInteger(number)
+	page, err := convertStringToInteger(pageNumber)
 	if err != nil {
 		return score, err
 	}
-	count, err := convertStringToInteger(limit)
+	count, err := convertStringToInteger(perPage)
 
 	if err != nil {
 		return score, err

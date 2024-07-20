@@ -7,3 +7,7 @@ type ErrorHandler struct {
 type ResponseClient struct {
 	Response string `json:"response"`
 }
+
+type ResponseToken struct {
+	Token string `json:"token"`
+}

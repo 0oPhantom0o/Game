@@ -15,5 +15,3 @@ func Login(phone string) (string, error) {
 	return token, nil
 
 }
-
-//a

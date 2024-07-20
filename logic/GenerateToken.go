@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-var secretKey = []byte(constants.SecretKey)
+var secretKey = []byte(constants.JwtSecretKey)
 
 func GenerateToken(id string) (string, error) {
 
@@ -25,5 +25,3 @@ func GenerateToken(id string) (string, error) {
 
 	return token, nil
 }
-
-//a

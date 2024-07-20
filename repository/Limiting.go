@@ -5,25 +5,25 @@ import (
 	"game/app"
 )
 
-func OTPLimit(phone string) (int64, string) {
+func OtpLimit(phone string) (int64, string) {
 	var rdb = app.RedisDB
 	var ctx = context.Background()
 
 	//insert rate limit phone and add counter
-	rateLimit := "rateLimit : " + phone
-	count := rdb.Incr(ctx, rateLimit).Val()
+	rateLimit := "rateLimit:" + phone
+	limitCounter := rdb.Incr(ctx, rateLimit).Val()
 
-	return count, rateLimit
+	return limitCounter, rateLimit
 }
 func OTPAnswerLimit(phone string) (int64, string) {
 	var rdb = app.RedisDB
 	var ctx = context.Background()
 
 	//insert rate limit phone and add counter
-	rateLimit := "WrongedOTPAnswerLimit : " + phone
-	count := rdb.Incr(ctx, rateLimit).Val()
+	rateLimit := "WrongedOTPAnswerLimit:" + phone
+	limitCounter := rdb.Incr(ctx, rateLimit).Val()
 
-	return count, rateLimit
+	return limitCounter, rateLimit
 }
 
 //

@@ -13,12 +13,12 @@ func main() {
 		log.Panicf("DataBase is not running:%v", err)
 	}
 
-	//Router Init
-	Router := gin.Default()
-	setupRoute(Router)
+	//router Init
+	router := gin.Default()
+	setupRoute(router)
 	//a
 	//Run Server
-	err := Router.Run(constants.ServerPort)
+	err := router.Run(constants.ServerPort)
 	if err != nil {
 		return
 	}

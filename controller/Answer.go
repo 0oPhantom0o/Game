@@ -7,7 +7,6 @@ import (
 	"net/http"
 )
 
-// a
 func Answer(c *gin.Context) {
 	tokenString := c.GetHeader("Authorization")
 	id, err := logic.VerifyToken(tokenString)

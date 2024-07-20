@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-func RandomCode() (string, error) {
+func randomCode() (string, error) {
 
 	code := CreateRandomCode()
 	fmt.Println(code)

@@ -15,13 +15,12 @@ const (
 // router groups
 const (
 	Version = "/v1"
-	//Auth routs
+	//auth routs
 	Auth       = "/auth"
-	RequestOtp = "/sign_up"
+	RequestOtp = "/request_otp"
 	Submit     = "/submitOtp"
 	Login      = "/login"
 	Nickname   = "/nickname"
-	//a
 	//Game routs
 	Game            = "/game"
 	RequestQuestion = "/question"

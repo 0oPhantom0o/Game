@@ -1,7 +1,6 @@
 package controller
 
 import (
-	"game/constants"
 	"game/domain"
 	"game/logic"
 	"github.com/gin-gonic/gin"
@@ -9,23 +8,21 @@ import (
 )
 
 func RequestOtp(c *gin.Context) {
-	var user domain.RequestPhone
-	var responseError domain.ErrorHandler
-	var client domain.ResponseClient
-
+	var (
+		user          domain.RequestPhone
+		responseError domain.ErrorHandler
+		client        domain.ResponseClient
+	)
 	err := responseError.Err
 	if err = c.BindJSON(&user); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err})
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	err = logic.RequestOtp(user.Phone)
+	client.Response, err = logic.RequestOtp(user.Phone)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	client.Response = constants.CodeIsSent + user.Phone
 	c.JSON(http.StatusOK, gin.H{"message": client})
 }
-
-//a

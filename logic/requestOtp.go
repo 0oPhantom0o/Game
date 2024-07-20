@@ -2,34 +2,37 @@ package logic
 
 import (
 	"fmt"
+	"game/constants"
 	"game/repository"
 )
 
-func RequestOtp(phone string) error {
+func RequestOtp(phone string) (string, error) {
 	//limiting request otp
-	limitCounter, rateLimit := repository.OTPLimit(phone)
+	limitCounter, rateLimit := repository.OtpLimit(phone)
 	if limitCounter == 1 {
 		err := repository.ExpireOtpTime(rateLimit)
 		if err != true {
-			return fmt.Errorf("error in expire time set")
+			return "", fmt.Errorf("error in expire time set")
 		}
 	}
 	if limitCounter >= 5 {
-		return fmt.Errorf("user Limited")
+		return "", fmt.Errorf("user Limited")
 	}
 
-	code, err := RandomCode()
+	code, err := randomCode()
 	if err != nil {
-		return err
+		return "", err
 	}
 	err = tempUser(phone, code)
 	if err != nil {
-		return err
+		return "", err
 	}
-	return nil
+
+	response := constants.CodeIsSent + phone
+
+	return response, nil
 }
 
-// a
 func tempUser(phone, code string) error {
 
 	err := repository.InsertOtp(phone, code)

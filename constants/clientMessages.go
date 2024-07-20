@@ -1,5 +1,3 @@
 package constants
 
-const CodeIsSent = "Code is sent to : "
-
-//a
+const CodeIsSent = "Code is sent to:"

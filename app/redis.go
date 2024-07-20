@@ -10,7 +10,7 @@ import (
 // a
 var RedisDB *redis.Client
 
-func RedisConnection() error {
+func redisConnection() error {
 	ctx := context.Background()
 	RedisDB = redis.NewClient(&redis.Options{
 		Addr:     constants.RedisPort,

@@ -17,7 +17,6 @@ func Question(id string) (string, error) {
 	return question, nil
 }
 
-// a
 func QaGenerator() (string, string) {
 	//generate question and answer
 	number1 := rand.Intn(10)

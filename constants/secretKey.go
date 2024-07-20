@@ -1,5 +1,3 @@
 package constants
 
-const SecretKey = "secret-key"
-
-//a
+const JwtSecretKey = "secret-key"

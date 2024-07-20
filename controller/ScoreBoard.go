@@ -14,13 +14,13 @@ func ScoreBoard(c *gin.Context) {
 		return
 	}
 
-	number := c.DefaultQuery("page", "1")
-	limit := c.DefaultQuery("count", "10")
-	score, err := logic.ScoreBoard(number, limit)
+	pageNumber := c.DefaultQuery("page", "1")
+	perPage := c.DefaultQuery("count", "10")
+	score, err := logic.ScoreBoard(pageNumber, perPage)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"NextPage : ": score.NextPage, "players : ": score.Players})
+	c.JSON(http.StatusOK, score)
 }

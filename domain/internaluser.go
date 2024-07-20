@@ -12,6 +12,6 @@ type TopPlayers struct {
 	Point    int    `json:"point" bson:"point"`
 }
 type Score struct {
-	Players  []TopPlayers
-	NextPage bool
+	NextPage bool         `json:"nextPage"`
+	Players  []TopPlayers `json:"players"`
 }

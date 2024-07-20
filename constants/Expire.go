@@ -8,5 +8,3 @@ const (
 	RateLimitUserExpireTime = 10 * time.Minute
 	WrongedAnswerExpireTime = 20 * time.Minute
 )
-
-//a

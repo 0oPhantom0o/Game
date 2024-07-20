@@ -7,11 +7,11 @@ import (
 	"game/constants"
 )
 
-func InsertOtp(key, value string) error {
+func InsertOtp(phone, code string) error {
 	var rdb = app.RedisDB
 	var ctx = context.Background()
 
-	_, err := rdb.Set(ctx, key, value, constants.TempUserExpireTIme).Result()
+	_, err := rdb.Set(ctx, phone, code, constants.TempUserExpireTIme).Result()
 	if err != nil {
 		return fmt.Errorf("couldnt insert otp in redis database")
 

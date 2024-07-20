@@ -10,6 +10,8 @@ import (
 func GetOtp(c *gin.Context) {
 
 	var user domain.User
+	var err error
+
 	if err := c.BindJSON(&user); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
@@ -24,5 +26,3 @@ func GetOtp(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"token": token})
 
 }
-
-//a
