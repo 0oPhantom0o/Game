@@ -8,15 +8,17 @@ import (
 	"log"
 )
 
-func main() {
+func init() {
 	if err := app.InitDb(); err != nil {
 		log.Panicf("DataBase is not running:%v", err)
 	}
 
+}
+func main() {
+
 	//router Init
 	router := gin.Default()
 	setupRoute(router)
-	//a
 	//Run Server
 	err := router.Run(constants.ServerPort)
 	if err != nil {
