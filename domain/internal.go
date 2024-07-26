@@ -1,5 +1,10 @@
 package domain
 
+import (
+	"github.com/golang-jwt/jwt/v5"
+	"go.mongodb.org/mongo-driver/bson/primitive"
+)
+
 type InternalUser struct {
 	Phone         string `json:"phone" bson:"phone"`
 	NickName      string `json:"nick_name" bson:"nick_name"`
@@ -14,4 +19,15 @@ type TopPlayers struct {
 type Score struct {
 	NextPage bool         `json:"next_page"`
 	Players  []TopPlayers `json:"players"`
+}
+type UserClaim struct {
+	jwt.RegisteredClaims
+	ID string
+}
+type ResponseToken struct {
+	Token string `json:"jwt_token"`
+}
+
+type UserId struct {
+	ID primitive.ObjectID `bson:"_id,omitempty"`
 }

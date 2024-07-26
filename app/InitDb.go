@@ -4,7 +4,6 @@ import (
 	"fmt"
 )
 
-// a
 func InitDb() error {
 	err := mongoConnection()
 	if err != nil {

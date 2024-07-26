@@ -8,21 +8,17 @@ import (
 )
 
 func RequestOtp(c *gin.Context) {
-	var (
-		user          domain.RequestPhone
-		responseError domain.ErrorHandler
-		client        domain.ResponseClient
-	)
-	err := responseError.Err
-	if err = c.BindJSON(&user); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+	var user domain.RequestPhone
+
+	if err := c.BindJSON(&user); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid request"})
 		return
 	}
 
-	client.Response, err = logic.RequestOtp(user.Phone)
+	err := logic.RequestOtp(user.Phone)
 	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
-	c.JSON(http.StatusOK, gin.H{"message": client})
+	c.IndentedJSON(http.StatusOK, gin.H{"message": "success"})
 }

@@ -7,7 +7,6 @@ import (
 	"github.com/redis/go-redis/v9"
 )
 
-// a
 var RedisDB *redis.Client
 
 func redisConnection() error {

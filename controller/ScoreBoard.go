@@ -10,7 +10,7 @@ func ScoreBoard(c *gin.Context) {
 	tokenString := c.GetHeader("Authorization")
 	_, err := logic.VerifyToken(tokenString)
 	if err != nil {
-		c.JSON(http.StatusUnauthorized, gin.H{"error": err})
+		c.JSON(http.StatusUnauthorized, gin.H{"error": err.Error()})
 		return
 	}
 
