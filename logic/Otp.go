@@ -1,11 +1,7 @@
 package logic
 
-import (
-	"game/repository"
-)
-
-func checkOtp(phone, randomCode string) (bool, error) {
-	storedCode, err := repository.FindStoredOtp(phone)
+func (g *GameLogic) checkOtp(phone, randomCode string) (bool, error) {
+	storedCode, err := g.Repo.FindStoredOtp(phone)
 	if err != nil {
 		return false, err
 	}

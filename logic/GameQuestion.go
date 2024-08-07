@@ -2,14 +2,13 @@ package logic
 
 import (
 	"fmt"
-	"game/repository"
 	"math/rand"
 )
 
-func Question(id string) (string, error) {
+func (g *GameLogic) Question(id string) (string, error) {
 
 	question, answer := QaGenerator()
-	err := repository.InsertAnswer(id, answer)
+	err := g.Repo.InsertAnswer(id, answer)
 	if err != nil {
 		return "", fmt.Errorf("data didnt inserted")
 	}

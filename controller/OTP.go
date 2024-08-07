@@ -2,12 +2,11 @@ package controller
 
 import (
 	"game/domain"
-	"game/logic"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )
 
-func GetOtp(c *gin.Context) {
+func (ctrl *GameController) GetOtp(c *gin.Context) {
 
 	var user domain.RequestRandomCode
 
@@ -16,7 +15,7 @@ func GetOtp(c *gin.Context) {
 		return
 	}
 
-	token, err := logic.GenerateUser(user.Phone, user.RandomCode)
+	token, err := ctrl.Logic.GenerateUser(user.Phone, user.RandomCode)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return

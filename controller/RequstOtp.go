@@ -2,12 +2,11 @@ package controller
 
 import (
 	"game/domain"
-	"game/logic"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )
 
-func RequestOtp(c *gin.Context) {
+func (ctrl *GameController) RequestOtp(c *gin.Context) {
 	var user domain.RequestPhone
 
 	if err := c.BindJSON(&user); err != nil {
@@ -15,7 +14,7 @@ func RequestOtp(c *gin.Context) {
 		return
 	}
 
-	err := logic.RequestOtp(user.Phone)
+	err := ctrl.Logic.RequestOtp(user.Phone)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return

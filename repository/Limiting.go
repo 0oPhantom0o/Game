@@ -1,28 +1,22 @@
 package repository
 
 import (
-	"context"
-	"game/app"
 	"game/constants"
 )
 
-func OtpLimit(phone string) (int64, string) {
-	var rdb = app.RedisDB
-	var ctx = context.Background()
+func (repo *ConRepository) OtpLimit(phone string) (int64, string) {
 
 	//insert rate limit phone and add counter
 	rateLimit := constants.RateLimit + phone
-	counter := rdb.Incr(ctx, rateLimit).Val()
+	counter := repo.redisdb.Incr(repo.ctx, rateLimit).Val()
 
 	return counter, rateLimit
 }
-func OTPAnswerLimit(phone string) (int64, string) {
-	var rdb = app.RedisDB
-	var ctx = context.Background()
+func (repo *ConRepository) OTPAnswerLimit(phone string) (int64, string) {
 
 	//insert rate limit phone and add counter
 	rateLimit := constants.WrongedOtpAnswerLimit + phone
-	counter := rdb.Incr(ctx, rateLimit).Val()
+	counter := repo.redisdb.Incr(repo.ctx, rateLimit).Val()
 
 	return counter, rateLimit
 }

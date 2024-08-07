@@ -3,10 +3,9 @@ package logic
 import (
 	"game/constants"
 	"game/domain"
-	"game/repository"
 )
 
-func ScoreBoard(pageNumber, perPage string) (domain.Score, error) {
+func (g *GameLogic) ScoreBoard(pageNumber, perPage string) (domain.Score, error) {
 	var score domain.Score
 
 	page, err := convertStringToInteger(pageNumber)
@@ -18,7 +17,7 @@ func ScoreBoard(pageNumber, perPage string) (domain.Score, error) {
 	if err != nil {
 		return score, err
 	}
-	scoreBoard, err := repository.ShowUsers(page, count)
+	scoreBoard, err := g.Repo.ShowUsers(page, count)
 	score.Players, score.NextPage = checkNextPage(scoreBoard, count)
 	if err != nil {
 		return score, err

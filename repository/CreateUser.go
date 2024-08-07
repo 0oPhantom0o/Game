@@ -3,7 +3,7 @@ package repository
 import (
 	"context"
 	"fmt"
-	"game/app"
+	"game/constants"
 	"game/domain"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -11,12 +11,8 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-func CreateUser(phone string) (string, error) {
-	collection, err := app.Collection()
-	ctx := context.Background()
-	if err != nil {
-		return "", fmt.Errorf("failed to connect to database: %w", err)
-	}
+func (repo *ConRepository) CreateUser(phone string) (string, error) {
+	collection := repo.mongodb.Database(constants.Database).Collection(constants.UserCollection)
 
 	user := domain.InternalUser{
 		Phone:         phone,
@@ -24,7 +20,7 @@ func CreateUser(phone string) (string, error) {
 		NickNameLimit: 0,
 		Point:         0,
 	}
-	_, err = collection.Indexes().CreateOne(
+	_, err := collection.Indexes().CreateOne(
 		context.Background(),
 		mongo.IndexModel{
 			Keys:    bson.D{{Key: "phone", Value: 1}, {Key: "nickname", Value: 1}},
@@ -35,7 +31,7 @@ func CreateUser(phone string) (string, error) {
 		return "", fmt.Errorf("failed to insert user into collection because its not uniqe: %w", err)
 	}
 
-	result, err := collection.InsertOne(ctx, user)
+	result, err := collection.InsertOne(repo.ctx, user)
 	if err != nil {
 		return "", fmt.Errorf("failed to insert user into collection:%w", err)
 	}

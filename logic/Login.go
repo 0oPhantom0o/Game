@@ -1,9 +1,7 @@
 package logic
 
-import "game/repository"
-
-func Login(phone string) (string, error) {
-	id, err := repository.FindUserIdByPhone(phone)
+func (g *GameLogic) Login(phone string) (string, error) {
+	id, err := g.Repo.FindUserIdByPhone(phone)
 	if err != nil {
 		return "", err
 	}

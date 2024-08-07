@@ -28,9 +28,9 @@ func mongoConnection() error {
 	return nil
 }
 
-func Collection() (*mongo.Collection, error) {
+func Collection() (*mongo.Client, error) {
 	if MongoClient == nil {
 		return nil, fmt.Errorf("MongoClient is empty")
 	}
-	return MongoClient.Database(constants.Database).Collection(constants.UserCollection), nil
+	return MongoClient, nil
 }

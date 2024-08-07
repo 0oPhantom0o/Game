@@ -3,20 +3,19 @@ package logic
 import (
 	"fmt"
 	"game/constants"
-	"game/repository"
 )
 
-func GenerateUser(phone, randomCode string) (string, error) {
+func (g *GameLogic) GenerateUser(phone, randomCode string) (string, error) {
 	//limiting wronged answers
-	status, err := checkOtp(phone, randomCode)
+	status, err := g.checkOtp(phone, randomCode)
 	if err != nil {
 		return "", err
 	}
 
 	if !status {
-		counter, rateLimit := repository.OTPAnswerLimit(phone)
+		counter, rateLimit := g.Repo.OTPAnswerLimit(phone)
 		if counter == constants.WrongedAnswerOtpBase {
-			err := repository.ExpireWrongedAnswerTime(rateLimit)
+			err := g.Repo.ExpireWrongedAnswerTime(rateLimit)
 			if err != true {
 				return "", fmt.Errorf("error in expire time set")
 			}
@@ -27,7 +26,7 @@ func GenerateUser(phone, randomCode string) (string, error) {
 
 		return "", fmt.Errorf("wronge answer")
 	}
-	id, err := repository.CreateUser(phone)
+	id, err := g.Repo.CreateUser(phone)
 	if err != nil {
 		return "", err
 	}

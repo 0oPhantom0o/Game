@@ -6,7 +6,7 @@ import (
 	"net/http"
 )
 
-func RequestQuestion(c *gin.Context) {
+func (ctrl *GameController) RequestQuestion(c *gin.Context) {
 
 	tokenString := c.GetHeader("Authorization")
 	Id, err := logic.VerifyToken(tokenString)
@@ -14,7 +14,7 @@ func RequestQuestion(c *gin.Context) {
 		c.JSON(http.StatusUnauthorized, gin.H{"error": err.Error()})
 		return
 	}
-	question, err := logic.Question(Id)
+	question, err := ctrl.Logic.Question(Id)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return

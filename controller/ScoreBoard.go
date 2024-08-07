@@ -6,7 +6,7 @@ import (
 	"net/http"
 )
 
-func ScoreBoard(c *gin.Context) {
+func (ctrl *GameController) ScoreBoard(c *gin.Context) {
 	tokenString := c.GetHeader("Authorization")
 	_, err := logic.VerifyToken(tokenString)
 	if err != nil {
@@ -16,7 +16,7 @@ func ScoreBoard(c *gin.Context) {
 
 	pageNumber := c.DefaultQuery("page", "1")
 	perPage := c.DefaultQuery("count", "10")
-	score, err := logic.ScoreBoard(pageNumber, perPage)
+	score, err := ctrl.Logic.ScoreBoard(pageNumber, perPage)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return

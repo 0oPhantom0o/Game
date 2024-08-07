@@ -1,20 +1,14 @@
 package repository
 
 import (
-	"context"
 	"fmt"
-	"game/app"
 )
 
-func DeleteAnswer(id string) error {
-	rdb := app.RedisDB
-	ctx := context.Background()
+func (repo *ConRepository) DeleteAnswer(id string) error {
 
-	_, err := rdb.Del(ctx, id).Result()
+	_, err := repo.redisdb.Del(repo.ctx, id).Result()
 	if err != nil {
 		return fmt.Errorf("failed to delete OTP from Redis: %w", err)
 	}
 	return nil
 }
-
-//a

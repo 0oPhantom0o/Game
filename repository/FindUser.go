@@ -1,64 +1,53 @@
 package repository
 
 import (
-	"context"
 	"fmt"
-	"game/app"
+	"game/constants"
 	"game/domain"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
-func FindUserIdByPhone(phone string) (string, error) {
-	collection, err := app.Collection()
+func (repo *ConRepository) FindUserIdByPhone(phone string) (string, error) {
 	var user domain.UserId
-	ctx := context.TODO()
-	if err != nil {
-		return "", fmt.Errorf("failed to connect to database: %w", err)
-	}
+	collection := repo.mongodb.Database(constants.Database).Collection(constants.UserCollection)
+
 	filter := bson.D{{"phone", phone}}
 	//find _id based on phone
-	err = collection.FindOne(ctx, filter).Decode(&user)
+	err := collection.FindOne(repo.ctx, filter).Decode(&user)
 	if err != nil {
 		return "", err
 	}
 	return user.ID.Hex(), nil
 }
-func FindUserByID(primitiveId primitive.ObjectID) (int, error) {
-	collection, err := app.Collection()
+func (repo *ConRepository) FindUserByID(primitiveId primitive.ObjectID) (int, error) {
 	var user domain.InternalUser
-	ctx := context.TODO()
-	if err != nil {
-		return 0, fmt.Errorf("failed to connect to database: %w", err)
-	}
+	collection := repo.mongodb.Database(constants.Database).Collection(constants.UserCollection)
+
 	filter := bson.D{{"_id", primitiveId}}
 	//find _id based on phone
-	err = collection.FindOne(ctx, filter).Decode(&user)
+	err := collection.FindOne(repo.ctx, filter).Decode(&user)
 	if err != nil {
 		return 0, err
 	}
 	return user.NickNameLimit, nil
 }
 
-func FindStoredOtp(id string) (string, error) {
-	var rdb = app.RedisDB
-	var ctx = context.Background()
+func (repo *ConRepository) FindStoredOtp(id string) (string, error) {
 
-	value, err := rdb.Get(ctx, id).Result()
+	otp, err := repo.redisdb.Get(repo.ctx, id).Result()
 	if err != nil {
 		return "", fmt.Errorf("user doesnt exist")
 	}
-	return value, nil
+	return otp, nil
 
 }
-func FindAnswer(id string) (string, error) {
-	var rdb = app.RedisDB
-	var ctx = context.Background()
 
-	trueAnswer, err := rdb.Get(ctx, id).Result()
+func (repo *ConRepository) FindStoredAnswer(id string) (string, error) {
+	answer, err := repo.redisdb.Get(repo.ctx, id).Result()
 	if err != nil {
-		return "", err
+		return "", fmt.Errorf("answer doesnt exist")
 	}
-	return trueAnswer, nil
+	return answer, nil
 
 }

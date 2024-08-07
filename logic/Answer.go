@@ -3,42 +3,46 @@ package logic
 import (
 	"fmt"
 	"game/constants"
-	"game/repository"
 )
 
-func CheckAnswer(id, answer string) (bool, error) {
-
-	trueAnswer, err := repository.FindAnswer(id)
+func (g *GameLogic) CheckAnswer(id, answer string) (bool, error) {
+	// Use g.redisDB instead of repository directly
+	mongoId, err := convertStringToPrimitive(id)
 	if err != nil {
-		return false, fmt.Errorf("wronge answer . search for new question ")
+		return false, err
+	}
+	trueAnswer, err := g.Repo.FindStoredAnswer(id)
+	if err != nil {
+		return false, fmt.Errorf("wrong answer. search for a new question")
 	}
 
 	if trueAnswer == answer {
-
-		err := changePoint(id, constants.RightAnswerPoint)
+		err := g.Repo.ChangePoint(mongoId, constants.RightAnswerPoint)
 		if err != nil {
 			return true, err
 		}
 		return true, nil
 	} else {
-		err = changePoint(id, constants.WrongedAnswerPoint)
+		err = g.Repo.ChangePoint(mongoId, constants.WrongedAnswerPoint)
 		if err != nil {
 			return false, err
 		}
 	}
-	err = repository.DeleteAnswer(id)
+	err = g.Repo.DeleteAnswer(id)
 	if err != nil {
 		return true, err
 	}
 	return false, nil
 }
 
-func changePoint(id string, point int) error {
+// Similarly, update other logic functions to use the interfaces.
+
+func (g *GameLogic) changePoint(id string, point int) error {
 	mongoId, err := convertStringToPrimitive(id)
 	if err != nil {
 		return err
 	}
-	err = repository.ChangePoint(mongoId, point)
+	err = g.Repo.ChangePoint(mongoId, point)
 	if err != nil {
 		return err
 	}

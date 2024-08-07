@@ -7,7 +7,7 @@ import (
 	"net/http"
 )
 
-func NickName(c *gin.Context) {
+func (ctrl *GameController) NickName(c *gin.Context) {
 	tokenString := c.GetHeader("Authorization")
 	id, err := logic.VerifyToken(tokenString)
 	if err != nil {
@@ -20,7 +20,7 @@ func NickName(c *gin.Context) {
 		return
 	}
 
-	err = logic.UpdateNickName(user.NickName, id)
+	err = ctrl.Logic.UpdateNickName(user.NickName, id)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
