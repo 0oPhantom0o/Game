@@ -28,11 +28,11 @@ type Repository interface {
 
 type ConRepository struct {
 	redisdb *redis.Client
-	mongodb *mongo.Client
+	mongodb *mongo.Collection
 	ctx     context.Context
 }
 
-func NewMongoRepository(redisdb *redis.Client, mongodb *mongo.Client, ctx context.Context) *ConRepository {
+func NewMongoRepository(redisdb *redis.Client, mongodb *mongo.Collection, ctx context.Context) *ConRepository {
 	return &ConRepository{
 		redisdb: redisdb, mongodb: mongodb, ctx: ctx}
 }

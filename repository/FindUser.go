@@ -2,7 +2,6 @@ package repository
 
 import (
 	"fmt"
-	"game/constants"
 	"game/domain"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -10,11 +9,9 @@ import (
 
 func (repo *ConRepository) FindUserIdByPhone(phone string) (string, error) {
 	var user domain.UserId
-	collection := repo.mongodb.Database(constants.Database).Collection(constants.UserCollection)
-
 	filter := bson.D{{"phone", phone}}
 	//find _id based on phone
-	err := collection.FindOne(repo.ctx, filter).Decode(&user)
+	err := repo.mongodb.FindOne(repo.ctx, filter).Decode(&user)
 	if err != nil {
 		return "", err
 	}
@@ -22,11 +19,10 @@ func (repo *ConRepository) FindUserIdByPhone(phone string) (string, error) {
 }
 func (repo *ConRepository) FindUserByID(primitiveId primitive.ObjectID) (int, error) {
 	var user domain.InternalUser
-	collection := repo.mongodb.Database(constants.Database).Collection(constants.UserCollection)
 
 	filter := bson.D{{"_id", primitiveId}}
 	//find _id based on phone
-	err := collection.FindOne(repo.ctx, filter).Decode(&user)
+	err := repo.mongodb.FindOne(repo.ctx, filter).Decode(&user)
 	if err != nil {
 		return 0, err
 	}

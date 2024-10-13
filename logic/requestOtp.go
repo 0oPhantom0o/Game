@@ -10,20 +10,20 @@ func (g *GameLogic) RequestOtp(phone string) error {
 	if counter == 1 {
 		err := g.Repo.ExpireOtpTime(rateLimit)
 		if err != true {
-			return fmt.Errorf("error in expire time set")
+			return fmt.Errorf("failed to set expiration time: %v", err)
 		}
 	}
 	if counter >= 5 {
-		return fmt.Errorf("user Limited")
+		return fmt.Errorf("user has reached the maximum limit of OTP requests")
 	}
 
 	code, err := randomCode()
 	if err != nil {
-		return err
+		return fmt.Errorf("failed to generate random code: %v", err)
 	}
 	err = g.tempUser(phone, code)
 	if err != nil {
-		return err
+		return fmt.Errorf("failed to store temporary user: %v", err)
 	}
 
 	return nil

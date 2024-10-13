@@ -11,7 +11,7 @@ func (g *GameLogic) UpdateNickName(nickName, id string) error {
 	}
 	count, err := g.Repo.FindUserByID(primitiveId)
 	if count >= 1 {
-		return fmt.Errorf("you changed nickname 2 times")
+		return fmt.Errorf("you changed nickname before")
 	}
 	err = g.Repo.UpdateNickName(primitiveId, nickName)
 	if err != nil {

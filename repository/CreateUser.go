@@ -3,7 +3,6 @@ package repository
 import (
 	"context"
 	"fmt"
-	"game/constants"
 	"game/domain"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -12,7 +11,7 @@ import (
 )
 
 func (repo *ConRepository) CreateUser(phone string) (string, error) {
-	collection := repo.mongodb.Database(constants.Database).Collection(constants.UserCollection)
+	collection := repo.mongodb
 
 	user := domain.InternalUser{
 		Phone:         phone,
