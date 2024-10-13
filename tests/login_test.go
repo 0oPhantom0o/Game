@@ -28,6 +28,10 @@ func (m *MockLogic) Login(phone string) (string, error) {
 
 // Test function for Login
 func TestLogin(t *testing.T) {
+	if err := app.InitDb(); err != nil {
+		log.Panicf("DataBase is not running:%v", err)
+	}
+
 	gin.SetMode(gin.TestMode) // Set Gin to test mode
 	router := gin.Default()
 	mongodb, err := app.Collection()

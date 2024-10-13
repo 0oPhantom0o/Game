@@ -17,8 +17,6 @@ import (
 	"testing"
 )
 
-// Mock the Logic interface
-
 func (m *MockLogic) CheckAnswer(id, answer string) (bool, error) {
 	args := m.Called(id, answer)
 	return args.Bool(0), args.Error(1)
@@ -27,6 +25,10 @@ func (m *MockLogic) CheckAnswer(id, answer string) (bool, error) {
 // Test function for Answer
 func TestAnswer(t *testing.T) {
 	gin.SetMode(gin.TestMode) // Set Gin to test mode
+	if err := app.InitDb(); err != nil {
+		log.Panicf("DataBase is not running:%v", err)
+	}
+
 	router := gin.Default()
 	mongodb, err := app.Collection()
 	if err != nil {
@@ -53,7 +55,7 @@ func TestAnswer(t *testing.T) {
 		{
 			name:           "Correct Answer",
 			input:          `{"answer":"42"}`,
-			token:          "valid_token",
+			token:          "Bearer valid_token",
 			mockReturn:     true,
 			mockErr:        nil,
 			expectedStatus: http.StatusOK,
@@ -62,7 +64,7 @@ func TestAnswer(t *testing.T) {
 		{
 			name:           "Wrong Answer",
 			input:          `{"answer":"23"}`,
-			token:          "valid_token",
+			token:          "Bearer valid_token",
 			mockReturn:     false,
 			mockErr:        nil,
 			expectedStatus: http.StatusOK,
@@ -71,7 +73,7 @@ func TestAnswer(t *testing.T) {
 		{
 			name:           "Error Checking Answer",
 			input:          `{"answer":"42"}`,
-			token:          "valid_token",
+			token:          "Bearer valid_token", // Ensure this includes "Bearer "
 			mockReturn:     false,
 			mockErr:        errors.New("wrong answer. search for a new question"),
 			expectedStatus: http.StatusInternalServerError,
@@ -90,6 +92,11 @@ func TestAnswer(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
+			// Create a new router for each test
+
+			// Register the route
+			router.POST("/answer", ctrl.Answer)
+
 			// Setup the mock
 			mockLogic.On("CheckAnswer", mock.AnythingOfType("string"), mock.AnythingOfType("string")).Return(tt.mockReturn, tt.mockErr)
 
@@ -102,7 +109,6 @@ func TestAnswer(t *testing.T) {
 			w := httptest.NewRecorder()
 
 			// Call the Answer handler
-			router.POST("/answer", ctrl.Answer)
 			router.ServeHTTP(w, req)
 
 			// Assert the status code and response body
@@ -113,4 +119,5 @@ func TestAnswer(t *testing.T) {
 			mockLogic.AssertExpectations(t)
 		})
 	}
+
 }

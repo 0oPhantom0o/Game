@@ -24,7 +24,7 @@ func (m *MockLogic) UpdateNickName(nickName, id string) error {
 
 // Mock token verification
 func MockVerifyToken(token string) (string, error) {
-	if token == "valid_token" {
+	if token == "Bearer valid_token" {
 		return "user_id_123", nil
 	}
 	return "", errors.New("invalid token")
@@ -32,6 +32,10 @@ func MockVerifyToken(token string) (string, error) {
 
 // Test function for NickName
 func TestNickName(t *testing.T) {
+	if err := app.InitDb(); err != nil {
+		log.Panicf("DataBase is not running:%v", err)
+	}
+
 	gin.SetMode(gin.TestMode) // Set Gin to test mode
 	router := gin.Default()
 	mongodb, err := app.Collection()
@@ -58,7 +62,7 @@ func TestNickName(t *testing.T) {
 		{
 			name:           "Valid Nickname Change",
 			input:          `{"nickName":"new_nick"}`,
-			token:          "valid_token",
+			token:          "Bearer valid_token",
 			mockReturn:     nil,
 			expectedStatus: http.StatusOK,
 			expectedBody:   `{"nickname_changed_to":{"nickName":"new_nick"}}`,
@@ -74,7 +78,7 @@ func TestNickName(t *testing.T) {
 		{
 			name:           "Error Changing Nickname",
 			input:          `{"nickName":"new_nick"}`,
-			token:          "valid_token",
+			token:          "Bearer valid_token",
 			mockReturn:     errors.New("you changed nickname before"),
 			expectedStatus: http.StatusInternalServerError,
 			expectedBody:   `{"error":"you changed nickname before"}`,

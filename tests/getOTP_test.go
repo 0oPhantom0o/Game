@@ -27,6 +27,10 @@ func (m *MockLogic) GenerateUser(phone, randomCode string) (string, error) {
 
 // Test function for GetOtp
 func TestGetOtp(t *testing.T) {
+	if err := app.InitDb(); err != nil {
+		log.Panicf("DataBase is not running:%v", err)
+	}
+
 	gin.SetMode(gin.TestMode) // Set Gin to test mode
 	router := gin.Default()
 	mongodb, err := app.Collection()
@@ -82,14 +86,14 @@ func TestGetOtp(t *testing.T) {
 			mockLogic.On("GenerateUser", mock.AnythingOfType("string"), mock.AnythingOfType("string")).Return(tt.mockReturn, tt.mockErr)
 
 			// Create a new HTTP request
-			req, _ := http.NewRequest(http.MethodPost, "/get-otp", strings.NewReader(tt.input))
+			req, _ := http.NewRequest(http.MethodPost, "/submitOtp", strings.NewReader(tt.input))
 			req.Header.Set("Content-Type", "application/json")
 
 			// Create a ResponseRecorder to record the response
 			w := httptest.NewRecorder()
 
 			// Call the GetOtp handler
-			router.POST("/get-otp", ctrl.GetOtp)
+			router.POST("/submitOtp", ctrl.GetOtp)
 			router.ServeHTTP(w, req)
 
 			// Assert the status code and response body

@@ -29,6 +29,10 @@ func (m *MockLogic) RequestOtp(phone string) error {
 }
 
 func TestRequestOtp(t *testing.T) {
+	if err := app.InitDb(); err != nil {
+		log.Panicf("DataBase is not running:%v", err)
+	}
+
 	gin.SetMode(gin.TestMode) // Set Gin to test mode
 	router := gin.Default()
 	mongodb, err := app.Collection()
