@@ -1,7 +1,13 @@
 package tests
 
 import (
+	"context"
 	"errors"
+	"game/app"
+	"game/controller"
+	"game/logic"
+	"game/repository"
+	"log"
 	"net/http"
 	"net/http/httptest"
 	"strings"
@@ -23,8 +29,17 @@ func (m *MockLogic) GenerateUser(phone, randomCode string) (string, error) {
 func TestGetOtp(t *testing.T) {
 	gin.SetMode(gin.TestMode) // Set Gin to test mode
 	router := gin.Default()
+	mongodb, err := app.Collection()
+	if err != nil {
+		log.Fatalf("Error initializing databases: %v", err)
+	}
+	ctx := context.Background()
+	redisdb := app.RedisDB
+	repo := repository.NewMongoRepository(redisdb, mongodb, ctx)
+	svc := logic.NewRestaurantService(repo)
+
 	mockLogic := new(MockLogic)
-	ctrl := &GameController{Logic: mockLogic}
+	ctrl := &controller.GameController{Logic: svc}
 
 	// Test cases
 	tests := []struct {

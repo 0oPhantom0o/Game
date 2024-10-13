@@ -1,10 +1,16 @@
 package tests
 
 import (
+	"context"
 	"errors"
+	"game/app"
+	"game/controller"
+	"game/logic"
+	"game/repository"
 	"github.com/gin-gonic/gin"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
+	"log"
 	"net/http"
 	"net/http/httptest"
 	"strings"
@@ -28,8 +34,17 @@ func MockVerifyToken(token string) (string, error) {
 func TestNickName(t *testing.T) {
 	gin.SetMode(gin.TestMode) // Set Gin to test mode
 	router := gin.Default()
+	mongodb, err := app.Collection()
+	if err != nil {
+		log.Fatalf("Error initializing databases: %v", err)
+	}
+	ctx := context.Background()
+	redisdb := app.RedisDB
+	repo := repository.NewMongoRepository(redisdb, mongodb, ctx)
+	svc := logic.NewRestaurantService(repo)
+
 	mockLogic := new(MockLogic)
-	ctrl := &GameController{Logic: mockLogic}
+	ctrl := &controller.GameController{Logic: svc}
 
 	// Test cases
 	tests := []struct {
