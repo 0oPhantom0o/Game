@@ -11,10 +11,13 @@ import (
 	"log"
 )
 
-func main() {
+func init() {
 	if err := app.InitDb(); err != nil {
 		log.Panicf("DataBase is not running:%v", err)
 	}
+
+}
+func main() {
 	mongodb, err := app.Collection()
 	if err != nil {
 		log.Fatalf("Error initializing databases: %v", err)
